@@ -22,3 +22,14 @@ Every component, with no exceptions, lives in `src/components/<Name>/` with exac
 
 ## Changing the structure
 Edit `templates/component/` and the required-file list in `scripts/check-meta.ts` together.
+
+## Tokens
+Global tokens live in `src/tokens/` (generated, never hand-edited) and are loaded in `.storybook/preview.tsx`.
+Source of truth: `tokens/figma-tokens.json` (primitives, spacing, radius, typography, shadows) and `tokens/semantic-colors.txt` (semantic colors), exported from the Figma file.
+Regenerate with `npm run build:tokens`.
+
+- Components must consume **semantic** tokens (`--ds-color-button-primary-bg`), not primitives, and never hardcode colors, sizes or radii.
+- Text styles: use the `.ds-text-<category>-<size>-<weight>` classes (e.g. `ds-text-body-14-medium`), one per Figma text style, or compose from the font tokens.
+- Naming: `--ds-color-*`, `--ds-font-*`, `--ds-line-height-*`, `--ds-letter-spacing-*`, `--ds-spacing-*`, `--ds-radius-*`, `--ds-icon-size-*`, `--ds-shadow-*`.
+- Component-scoped tokens in `<Name>.tokens.css` should alias these globals.
+- Meta `tokens` sections list the global token names a component uses.

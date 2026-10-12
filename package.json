@@ -9,7 +9,8 @@
     "check:meta": "tsx scripts/check-meta.ts",
     "new:component": "tsx scripts/new-component.ts",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "build:tokens": "tsx scripts/build-tokens.ts"
   },
   "repository": {
     "type": "git",
