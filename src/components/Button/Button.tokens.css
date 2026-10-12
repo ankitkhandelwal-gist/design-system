@@ -1,3 +1,166 @@
+/*
+ * Button: component-scoped tokens (aliases of global tokens in src/tokens) and styles.
+ * Spec source: Figma "Button" component set, node 263:829.
+ * `data-state="hover|focused|disabled"` forces a visual state; it exists so stories can render
+ * every Figma state side by side. Real usage relies on :hover, :focus-visible and :disabled.
+ */
+
 .ds-button {
-  /* component-scoped tokens: --ds-button-* */
+  /* size (overridden per [data-size]) */
+  --ds-button-padding-x: var(--ds-spacing-6);
+  --ds-button-padding-y: var(--ds-spacing-4);
+  --ds-button-gap: var(--ds-spacing-4);
+  --ds-button-font-size: var(--ds-font-size-body-large);
+  --ds-button-line-height: var(--ds-line-height-body-large);
+  --ds-button-letter-spacing: var(--ds-letter-spacing-body-large);
+  --ds-button-icon-size: var(--ds-icon-size-medium);
+  --ds-button-radius: var(--ds-radius-md);
+  --ds-button-focus-width: 2px;
+  --ds-button-font-weight: var(--ds-font-weight-medium);
+
+  /* color (overridden per [data-variant]) */
+  --ds-button-bg: transparent;
+  --ds-button-bg-hover: transparent;
+  --ds-button-bg-disabled: transparent;
+  --ds-button-text: var(--ds-color-text-primary);
+  --ds-button-text-hover: var(--ds-button-text);
+  --ds-button-text-disabled: var(--ds-color-text-disabled);
+  --ds-button-icon: var(--ds-color-icon-primary);
+  --ds-button-icon-disabled: var(--ds-color-icon-disabled);
+  --ds-button-focus-ring: var(--ds-color-border-primary-focus);
+}
+
+/* Sizes */
+.ds-button[data-size="small"] {
+  --ds-button-padding-x: var(--ds-spacing-5);
+  --ds-button-gap: var(--ds-spacing-3);
+  --ds-button-font-size: var(--ds-font-size-body-medium);
+  --ds-button-line-height: var(--ds-line-height-body-medium);
+  --ds-button-letter-spacing: var(--ds-letter-spacing-body-medium);
+  --ds-button-icon-size: var(--ds-icon-size-small);
+}
+.ds-button[data-size="large"] {
+  --ds-button-padding-y: var(--ds-spacing-5);
+}
+
+/* Variants */
+.ds-button[data-variant="primary"] {
+  --ds-button-bg: var(--ds-color-button-primary-bg);
+  --ds-button-bg-hover: var(--ds-color-button-primary-hover);
+  --ds-button-bg-disabled: var(--ds-color-button-primary-disabled-bg);
+  --ds-button-text: var(--ds-color-button-primary-text);
+  --ds-button-text-disabled: var(--ds-color-button-primary-disabled-text);
+  --ds-button-icon: var(--ds-color-icon-inverse);
+  --ds-button-focus-ring: var(--ds-color-border-primary-focus);
+}
+/* Figma "Secondary" uses the secondary-grey tokens. */
+.ds-button[data-variant="secondary"] {
+  --ds-button-bg: var(--ds-color-button-secondary-grey-bg);
+  --ds-button-bg-hover: var(--ds-color-button-secondary-grey-hover);
+  --ds-button-bg-disabled: var(--ds-color-button-secondary-grey-disabled-bg);
+  --ds-button-text: var(--ds-color-button-secondary-grey-text);
+  --ds-button-text-disabled: var(--ds-color-button-secondary-grey-disabled-text);
+  --ds-button-icon: var(--ds-color-icon-secondary);
+  --ds-button-focus-ring: var(--ds-color-border-default);
+}
+.ds-button[data-variant="destructive"] {
+  --ds-button-bg: var(--ds-color-button-danger-bg);
+  --ds-button-bg-hover: var(--ds-color-button-danger-hover);
+  --ds-button-bg-disabled: var(--ds-color-button-danger-disabled-bg);
+  --ds-button-text: var(--ds-color-button-danger-text);
+  --ds-button-text-disabled: var(--ds-color-button-danger-text);
+  --ds-button-icon: var(--ds-color-icon-inverse);
+  --ds-button-focus-ring: var(--ds-color-border-error-focus);
+}
+.ds-button[data-variant="success"] {
+  --ds-button-bg: var(--ds-color-button-success-bg);
+  --ds-button-bg-hover: var(--ds-color-button-success-hover);
+  --ds-button-bg-disabled: var(--ds-color-button-success-disabled-bg);
+  --ds-button-text: var(--ds-color-button-success-text);
+  --ds-button-text-disabled: var(--ds-color-button-success-disabled-text);
+  --ds-button-icon: var(--ds-color-icon-inverse);
+  --ds-button-focus-ring: var(--ds-color-border-success-focus);
+}
+/* Tertiary and Link are text-only: no background, no padding. */
+.ds-button[data-variant="tertiary"],
+.ds-button[data-variant="link"] {
+  --ds-button-padding-x: var(--ds-spacing-0);
+  --ds-button-padding-y: var(--ds-spacing-0);
+}
+.ds-button[data-variant="tertiary"] {
+  --ds-button-text: var(--ds-color-button-tertiary-text);
+  --ds-button-text-hover: var(--ds-color-button-tertiary-hover);
+  --ds-button-text-disabled: var(--ds-color-button-tertiary-disabled);
+  --ds-button-icon: var(--ds-color-icon-primary);
+  --ds-button-focus-ring: var(--ds-color-border-primary-focus);
+}
+.ds-button[data-variant="link"] {
+  --ds-button-text: var(--ds-color-button-link-text);
+  --ds-button-text-hover: var(--ds-color-button-link-hover);
+  --ds-button-text-disabled: var(--ds-color-button-link-disabled);
+  --ds-button-icon: var(--ds-color-icon-info);
+  --ds-button-focus-ring: var(--ds-color-border-primary);
+}
+/* In Figma the Medium icon is 16px for Tertiary and Link (20px for the filled variants). */
+.ds-button[data-variant="tertiary"][data-size="medium"],
+.ds-button[data-variant="link"][data-size="medium"] {
+  --ds-button-icon-size: var(--ds-icon-size-small);
+}
+
+/* Base */
+.ds-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ds-button-gap);
+  box-sizing: border-box;
+  margin: 0;
+  padding: var(--ds-button-padding-y) var(--ds-button-padding-x);
+  border: 0;
+  border-radius: var(--ds-button-radius);
+  background: var(--ds-button-bg);
+  color: var(--ds-button-text);
+  font-family: var(--ds-font-family);
+  font-size: var(--ds-button-font-size);
+  font-weight: var(--ds-button-font-weight);
+  line-height: var(--ds-button-line-height);
+  letter-spacing: var(--ds-button-letter-spacing);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.ds-button__label {
+  text-align: center;
+}
+.ds-button__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: var(--ds-button-icon-size);
+  height: var(--ds-button-icon-size);
+  color: var(--ds-button-icon);
+}
+.ds-button__icon > svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* States */
+.ds-button:hover:not(:disabled),
+.ds-button[data-state="hover"] {
+  background: var(--ds-button-bg-hover);
+  color: var(--ds-button-text-hover);
+}
+.ds-button:focus-visible,
+.ds-button[data-state="focused"] {
+  outline: none;
+  box-shadow: inset 0 0 0 var(--ds-button-focus-width) var(--ds-button-focus-ring);
+}
+.ds-button:disabled,
+.ds-button[data-state="disabled"] {
+  cursor: not-allowed;
+  background: var(--ds-button-bg-disabled);
+  color: var(--ds-button-text-disabled);
+}
+.ds-button:disabled .ds-button__icon,
+.ds-button[data-state="disabled"] .ds-button__icon {
+  color: var(--ds-button-icon-disabled);
 }

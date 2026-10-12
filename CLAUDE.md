@@ -7,7 +7,7 @@ Every component, with no exceptions, lives in `src/components/<Name>/` with exac
 <Name>/
   <Name>.tsx            implementation
   <Name>.meta.ts        metadata via defineMeta (see src/meta/types.ts); what agents read to pick and compose components
-  <Name>.tokens.css     component-scoped tokens (--ds-<kebab-name>-*)
+  <Name>.tokens.css     component-scoped tokens (--ds-<kebab-name>-*) plus the component styles
   <Name>.stories.tsx    visual test surface
   <Name>.test.tsx       behavior tests
   index.ts              single canonical export
@@ -18,7 +18,8 @@ Every component, with no exceptions, lives in `src/components/<Name>/` with exac
 2. Implement `<Name>.tsx`, then replace every `TODO` in `<Name>.meta.ts`.
 3. Keep meta in sync with props, variants and tokens: any change to one means updating the other.
 4. Add stories for each variant and tests for each behavior listed in meta (keyboard support, states).
-5. Run `npm run check:meta` and `npm run typecheck`. Both must pass.
+5. Run `npm run check:meta`, `npm run typecheck` and `npm test`. All must pass.
+6. Building from Figma: read every variant's variable bindings with the Figma MCP (use_figma), map them to `--ds-*` tokens, and verify sizes in the `AllStates`-style story against Figma. See `src/components/Button` as the reference implementation.
 
 ## Changing the structure
 Edit `templates/component/` and the required-file list in `scripts/check-meta.ts` together.
