@@ -24,12 +24,25 @@ export default defineMeta({
       description: "Controls padding, font size and icon size.",
       values: ["small", "medium", "large"],
     },
-    children: { type: "ReactNode", required: true, description: "The button label." },
+    children: {
+      type: "ReactNode",
+      description: "The button label. Omit for an icon-only button, which then requires aria-label.",
+    },
     leadingIcon: {
       type: "ReactNode",
       description: "Icon before the label. Decorative (aria-hidden). Use svg with currentColor.",
     },
     trailingIcon: { type: "ReactNode", description: "Icon after the label. Decorative (aria-hidden)." },
+    showLeadingIcon: {
+      type: "boolean",
+      default: true,
+      description: "Show or hide the leading icon without removing it. Maps to Figma `Show Leading Icon`.",
+    },
+    showTrailingIcon: {
+      type: "boolean",
+      default: true,
+      description: "Show or hide the trailing icon without removing it. Maps to Figma `Show Trailing Icon`.",
+    },
     disabled: { type: "boolean", default: false, description: "Disables the button (native disabled attribute)." },
     type: {
       type: '"button" | "submit" | "reset"',
@@ -160,8 +173,9 @@ export default defineMeta({
       commonPatterns: [
         { name: "Dialog footer", composition: "Button[secondary] (Cancel) + Button[primary] (Confirm), right-aligned" },
         { name: "Destructive confirm", composition: "Button[secondary] (Cancel) + Button[destructive] (Delete)" },
+        { name: "Loading", composition: "ButtonSkeleton[size matching the button] until the button's content is ready" },
         { name: "Row action", composition: "Button[tertiary, size=small] with a leadingIcon inside a Table row" },
-        { name: "Icon-only", composition: "Button with leadingIcon, empty-looking label avoided: set aria-label and a Tooltip" },
+        { name: "Icon-only", composition: "Button with leadingIcon, no children, aria-label and a Tooltip (same padding and height as the labelled size; this is the Figma button with an empty label)" },
       ],
       antiPatterns: [
         {
