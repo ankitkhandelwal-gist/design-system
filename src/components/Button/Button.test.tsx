@@ -1,7 +1,8 @@
+import "../../tokens/index.css";
 import { createRef } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
-import { Button } from "./Button";
+import { Button, ButtonSkeleton } from "./Button";
 import meta from "./Button.meta";
 
 afterEach(cleanup);
@@ -54,9 +55,34 @@ describe("Button", () => {
     expect(screen.getByRole("button", { name: "Next" })).toBeTruthy();
   });
 
+  it("hides icons when showLeadingIcon / showTrailingIcon are false", () => {
+    render(
+      <Button showLeadingIcon={false} showTrailingIcon={false} leadingIcon={<svg data-testid="lead" />} trailingIcon={<svg data-testid="trail" />}>
+        Next
+      </Button>,
+    );
+    expect(screen.queryByTestId("lead")).toBeNull();
+    expect(screen.queryByTestId("trail")).toBeNull();
+  });
+
   it("supports icon-only buttons via aria-label", () => {
-    render(<Button aria-label="Add" leadingIcon={<svg />}>{""}</Button>);
-    expect(screen.getByRole("button", { name: "Add" })).toBeTruthy();
+    render(<Button aria-label="Add" leadingIcon={<svg />} />);
+    const el = screen.getByRole("button", { name: "Add" });
+    expect(el.hasAttribute("data-icon-only")).toBe(true);
+    expect(el.querySelector(".ds-button__label")).toBeNull();
+  });
+
+  it("keeps the labelled height and padding for icon-only buttons", () => {
+    render(
+      <>
+        <Button size="medium" aria-label="Icon" leadingIcon={<svg />} />
+        <Button size="medium">Label</Button>
+      </>,
+    );
+    const [iconOnly, labelled] = screen.getAllByRole("button").map((b) => b.getBoundingClientRect());
+    expect(iconOnly?.height).toBe(labelled?.height);
+    // medium: 16px padding on each side + 20px icon
+    expect(iconOnly?.width).toBe(52);
   });
 
   it("forwards ref and extra class names", () => {
@@ -65,6 +91,20 @@ describe("Button", () => {
     expect(ref.current).toBeInstanceOf(HTMLButtonElement);
     expect(ref.current?.className).toContain("ds-button");
     expect(ref.current?.className).toContain("custom");
+  });
+});
+
+describe("ButtonSkeleton", () => {
+  it("is hidden from assistive tech and matches the button height", () => {
+    const { container } = render(
+      <>
+        <ButtonSkeleton size="large" />
+        <Button size="large">Label</Button>
+      </>,
+    );
+    const skeleton = container.querySelector(".ds-button-skeleton") as HTMLElement;
+    expect(skeleton.getAttribute("aria-hidden")).toBe("true");
+    expect(skeleton.getBoundingClientRect().height).toBe(screen.getByRole("button").getBoundingClientRect().height);
   });
 });
 

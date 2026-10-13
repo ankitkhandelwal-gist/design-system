@@ -5,7 +5,8 @@
  * every Figma state side by side. Real usage relies on :hover, :focus-visible and :disabled.
  */
 
-.ds-button {
+.ds-button,
+.ds-button-skeleton {
   /* size (overridden per [data-size]) */
   --ds-button-padding-x: var(--ds-spacing-6);
   --ds-button-padding-y: var(--ds-spacing-4);
@@ -31,7 +32,8 @@
 }
 
 /* Sizes */
-.ds-button[data-size="small"] {
+.ds-button[data-size="small"],
+.ds-button-skeleton[data-size="small"] {
   --ds-button-padding-x: var(--ds-spacing-5);
   --ds-button-gap: var(--ds-spacing-3);
   --ds-button-font-size: var(--ds-font-size-body-medium);
@@ -39,7 +41,8 @@
   --ds-button-letter-spacing: var(--ds-letter-spacing-body-medium);
   --ds-button-icon-size: var(--ds-icon-size-small);
 }
-.ds-button[data-size="large"] {
+.ds-button[data-size="large"],
+.ds-button-skeleton[data-size="large"] {
   --ds-button-padding-y: var(--ds-spacing-5);
 }
 
@@ -163,4 +166,39 @@
 .ds-button:disabled .ds-button__icon,
 .ds-button[data-state="disabled"] .ds-button__icon {
   color: var(--ds-button-icon-disabled);
+}
+
+/* Icon-only (empty label in Figma): same padding as the labelled button, and the height still
+   includes the empty label's line height, so it stays 36 / 40 / 48px. */
+.ds-button[data-icon-only] {
+  min-height: calc(var(--ds-button-line-height) + 2 * var(--ds-button-padding-y));
+}
+
+/* Skeleton: loading placeholder with the same height as a labelled button. Not in the Figma set. */
+.ds-button-skeleton {
+  --ds-button-skeleton-base: var(--ds-color-background-tertiary);
+  --ds-button-skeleton-highlight: var(--ds-color-background-disabled);
+  display: inline-block;
+  box-sizing: border-box;
+  width: var(--ds-spacing-15);
+  height: calc(var(--ds-button-line-height) + 2 * var(--ds-button-padding-y));
+  border-radius: var(--ds-button-radius);
+  background: linear-gradient(
+    90deg,
+    var(--ds-button-skeleton-base) 25%,
+    var(--ds-button-skeleton-highlight) 50%,
+    var(--ds-button-skeleton-base) 75%
+  );
+  background-size: 200% 100%;
+  animation: ds-button-skeleton-shimmer 1.4s ease-in-out infinite;
+}
+.ds-button-skeleton[data-size="small"] {
+  width: var(--ds-spacing-14);
+}
+@keyframes ds-button-skeleton-shimmer {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ds-button-skeleton { animation: none; }
 }
