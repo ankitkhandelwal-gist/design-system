@@ -8,13 +8,14 @@ interface ButtonBaseProps extends Omit<ComponentPropsWithRef<"button">, "childre
   /** Visual style. Maps to the Figma `Type` property. */
   variant?: ButtonVariant;
   size?: ButtonSize;
-  /** Icon shown before the label. Decorative (aria-hidden). */
-  leadingIcon?: ReactNode;
-  trailingIcon?: ReactNode;
   /** Show or hide the leading icon without removing it. Maps to Figma `Show Leading Icon`. */
   showLeadingIcon?: boolean;
+  /** Icon shown before the label. Decorative (aria-hidden). */
+  leadingIcon?: ReactNode;
   /** Show or hide the trailing icon without removing it. Maps to Figma `Show Trailing Icon`. */
   showTrailingIcon?: boolean;
+  /** Icon shown after the label. Decorative (aria-hidden). */
+  trailingIcon?: ReactNode;
 }
 
 /** A button has a visible label, or (icon-only) no label and an `aria-label`. */

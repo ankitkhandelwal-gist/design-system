@@ -1,12 +1,31 @@
 import type { CSSProperties, ReactNode } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import * as iconExports from "../../icons";
 import { Button, ButtonSkeleton, type ButtonSize, type ButtonVariant } from "./Button";
 
-const PlaceholderIcon = () => (
+const SquareIcon = () => (
   <svg viewBox="0 0 20 20" fill="currentColor" focusable="false">
     <rect width="20" height="20" rx="4" />
   </svg>
 );
+
+/**
+ * Icon picker for the Controls panel: "None", the Figma placeholder square, and every `*Icon` exported
+ * from src/icons. Add an icon there and it shows up in the dropdown automatically.
+ */
+const iconComponents: Record<string, () => ReactNode> = Object.fromEntries(
+  Object.entries(iconExports)
+    .filter(([name]) => name.endsWith("Icon"))
+    .map(([name, Icon]) => [name.replace(/Icon$/, ""), () => <Icon />]),
+);
+const iconOptions = ["None", "Placeholder", ...Object.keys(iconComponents)];
+const iconMapping: Record<string, ReactNode> = {
+  None: undefined,
+  Placeholder: <SquareIcon />,
+  ...Object.fromEntries(Object.entries(iconComponents).map(([name, render]) => [name, render()])),
+};
+/** Default icon for stories that are not driven by Controls. */
+const PlaceholderIcon = () => <>{iconMapping.Search ?? <SquareIcon />}</>;
 
 const variants: ButtonVariant[] = ["primary", "secondary", "tertiary", "destructive", "success", "link"];
 const sizes: ButtonSize[] = ["small", "medium", "large"];
@@ -22,18 +41,19 @@ const meta = {
     variant: "primary",
     size: "small",
     disabled: false,
-    leadingIcon: <PlaceholderIcon />,
-    trailingIcon: <PlaceholderIcon />,
     showLeadingIcon: true,
+    leadingIcon: "Search" as unknown as ReactNode,
     showTrailingIcon: true,
+    trailingIcon: "Search" as unknown as ReactNode,
   },
   argTypes: {
+    children: { name: "label", control: "text", description: "The button text (Figma: Label). In code it is the children." },
     variant: { control: "select", options: variants },
     size: { control: "inline-radio", options: sizes },
     showLeadingIcon: { control: "boolean", description: "Show or hide the leading icon (Figma: Show Leading Icon)" },
+    leadingIcon: { control: "select", options: iconOptions, mapping: iconMapping, description: "Pick an icon (stories only: in code pass any svg)" },
     showTrailingIcon: { control: "boolean", description: "Show or hide the trailing icon (Figma: Show Trailing Icon)" },
-    leadingIcon: { control: false },
-    trailingIcon: { control: false },
+    trailingIcon: { control: "select", options: iconOptions, mapping: iconMapping, description: "Pick an icon (stories only: in code pass any svg)" },
   },
 } satisfies Meta<typeof Button>;
 export default meta;
