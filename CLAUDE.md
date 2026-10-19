@@ -26,7 +26,7 @@ Edit `templates/component/` and the required-file list in `scripts/check-meta.ts
 
 ## Tokens
 Global tokens live in `src/tokens/` (generated, never hand-edited) and are loaded in `.storybook/preview.tsx`.
-Source of truth: `tokens/figma-tokens.json` (primitives, spacing, radius, typography, shadows) and `tokens/semantic-colors.txt` (semantic colors), exported from the Figma file.
+Source of truth: `tokens/figma-tokens.json` (primitives, spacing, radius, typography, shadows) `tokens/semantic-colors.txt` (semantic colors) and `tokens/tag-colors.txt` (Tag collection), exported from the Figma file.
 Regenerate with `npm run build:tokens`.
 
 - Components must consume **semantic** tokens (`--ds-color-button-primary-bg`), not primitives, and never hardcode colors, sizes or radii.

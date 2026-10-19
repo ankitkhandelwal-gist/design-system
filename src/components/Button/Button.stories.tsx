@@ -1,31 +1,9 @@
 import type { CSSProperties, ReactNode } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import * as iconExports from "../../icons";
+import { DefaultStoryIcon, iconMapping, iconOptions } from "../../icons/storyIcons";
 import { Button, ButtonSkeleton, type ButtonSize, type ButtonVariant } from "./Button";
 
-const SquareIcon = () => (
-  <svg viewBox="0 0 20 20" fill="currentColor" focusable="false">
-    <rect width="20" height="20" rx="4" />
-  </svg>
-);
-
-/**
- * Icon picker for the Controls panel: "None", the Figma placeholder square, and every `*Icon` exported
- * from src/icons. Add an icon there and it shows up in the dropdown automatically.
- */
-const iconComponents: Record<string, () => ReactNode> = Object.fromEntries(
-  Object.entries(iconExports)
-    .filter(([name]) => name.endsWith("Icon"))
-    .map(([name, Icon]) => [name.replace(/Icon$/, ""), () => <Icon />]),
-);
-const iconOptions = ["None", "Placeholder", ...Object.keys(iconComponents)];
-const iconMapping: Record<string, ReactNode> = {
-  None: undefined,
-  Placeholder: <SquareIcon />,
-  ...Object.fromEntries(Object.entries(iconComponents).map(([name, render]) => [name, render()])),
-};
-/** Default icon for stories that are not driven by Controls. */
-const PlaceholderIcon = () => <>{iconMapping.Search ?? <SquareIcon />}</>;
+const PlaceholderIcon = DefaultStoryIcon;
 
 const variants: ButtonVariant[] = ["primary", "secondary", "tertiary", "destructive", "success", "link"];
 const sizes: ButtonSize[] = ["small", "medium", "large"];

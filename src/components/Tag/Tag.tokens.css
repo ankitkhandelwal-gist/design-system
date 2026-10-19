@@ -1,0 +1,210 @@
+/*
+ * Tag: component-scoped tokens (aliases of global tokens in src/tokens) and styles.
+ * Spec source: Figma "Tag" component set, node 283:191 (7 colors x 3 types x Default/Hover).
+ * `data-state="hover"` forces the hover look for stories; real usage relies on :hover.
+ * Purple and Teal icons use primitives (Purple/600, Teal/600) because Figma has no semantic icon token for them.
+ */
+
+.ds-tag {
+  --ds-tag-padding-x: var(--ds-spacing-4);
+  --ds-tag-padding-y: var(--ds-spacing-2);
+  --ds-tag-gap: var(--ds-spacing-2);
+  --ds-tag-radius: var(--ds-radius-sm);
+  --ds-tag-icon-size: var(--ds-icon-size-x-small);
+  --ds-tag-border-width: 1px;
+
+  --ds-tag-bg: transparent;
+  --ds-tag-bg-hover: var(--ds-tag-bg);
+  --ds-tag-text: var(--ds-color-text-primary);
+  --ds-tag-border: transparent;
+  --ds-tag-icon: var(--ds-tag-text);
+}
+
+/* Colors x types */
+.ds-tag[data-color="red"][data-variant="subtle"] {
+  --ds-tag-bg: var(--ds-color-tags-and-scale-tag-red-subtle-bg);
+  --ds-tag-bg-hover: var(--ds-color-tag-red-subtle-hover-bg);
+  --ds-tag-text: var(--ds-color-tags-and-scale-tag-red-subtle-text);
+  --ds-tag-border: transparent;
+  --ds-tag-icon: var(--ds-color-icon-error);
+}
+.ds-tag[data-color="red"][data-variant="outline"] {
+  --ds-tag-bg: var(--ds-color-tags-and-scale-tag-red-outline-bg);
+  --ds-tag-bg-hover: var(--ds-color-tag-red-outline-hover-bg);
+  --ds-tag-text: var(--ds-color-tags-and-scale-tag-red-outline-text);
+  --ds-tag-border: var(--ds-color-tags-and-scale-tag-red-outline-stroke);
+  --ds-tag-icon: var(--ds-color-icon-error);
+}
+.ds-tag[data-color="red"][data-variant="filled"] {
+  --ds-tag-bg: var(--ds-color-tags-and-scale-tag-red-filled-bg);
+  --ds-tag-bg-hover: var(--ds-color-tag-red-filled-hover-bg);
+  --ds-tag-text: var(--ds-color-tags-and-scale-tag-red-filled-text);
+  --ds-tag-border: transparent;
+  --ds-tag-icon: var(--ds-color-icon-inverse);
+}
+.ds-tag[data-color="green"][data-variant="subtle"] {
+  --ds-tag-bg: var(--ds-color-tags-and-scale-tag-green-subtle-bg);
+  --ds-tag-bg-hover: var(--ds-color-tag-green-subtle-hover-bg);
+  --ds-tag-text: var(--ds-color-tags-and-scale-tag-green-subtle-text);
+  --ds-tag-border: transparent;
+  --ds-tag-icon: var(--ds-color-icon-success);
+}
+.ds-tag[data-color="green"][data-variant="outline"] {
+  --ds-tag-bg: var(--ds-color-tags-and-scale-tag-green-outline-bg);
+  --ds-tag-bg-hover: var(--ds-color-tag-green-outline-hover-bg);
+  --ds-tag-text: var(--ds-color-tags-and-scale-tag-green-outline-text);
+  --ds-tag-border: var(--ds-color-tags-and-scale-tag-green-outline-stroke);
+  --ds-tag-icon: var(--ds-color-icon-success);
+}
+.ds-tag[data-color="green"][data-variant="filled"] {
+  --ds-tag-bg: var(--ds-color-tags-and-scale-tag-green-filled-bg);
+  --ds-tag-bg-hover: var(--ds-color-tag-green-filled-hover-bg);
+  --ds-tag-text: var(--ds-color-tags-and-scale-tag-green-filled-text);
+  --ds-tag-border: transparent;
+  --ds-tag-icon: var(--ds-color-icon-inverse);
+}
+.ds-tag[data-color="orange"][data-variant="subtle"] {
+  --ds-tag-bg: var(--ds-color-tags-and-scale-tag-orange-subtle-bg);
+  --ds-tag-bg-hover: var(--ds-color-tag-orange-subtle-hover-bg);
+  --ds-tag-text: var(--ds-color-tags-and-scale-tag-orange-subtle-text);
+  --ds-tag-border: transparent;
+  --ds-tag-icon: var(--ds-color-icon-warning);
+}
+.ds-tag[data-color="orange"][data-variant="outline"] {
+  --ds-tag-bg: var(--ds-color-tags-and-scale-tag-orange-outline-bg);
+  --ds-tag-bg-hover: var(--ds-color-tag-orange-outline-hover-bg);
+  --ds-tag-text: var(--ds-color-tags-and-scale-tag-orange-outline-text);
+  --ds-tag-border: var(--ds-color-tags-and-scale-tag-orange-outline-stroke);
+  --ds-tag-icon: var(--ds-color-icon-warning);
+}
+.ds-tag[data-color="orange"][data-variant="filled"] {
+  --ds-tag-bg: var(--ds-color-tags-and-scale-tag-orange-filled-bg);
+  --ds-tag-bg-hover: var(--ds-color-tag-orange-filled-hover-bg);
+  --ds-tag-text: var(--ds-color-tags-and-scale-tag-orange-filled-text);
+  --ds-tag-border: transparent;
+  --ds-tag-icon: var(--ds-color-icon-inverse);
+}
+.ds-tag[data-color="blue"][data-variant="subtle"] {
+  --ds-tag-bg: var(--ds-color-tags-and-scale-tag-blue-subtle-bg);
+  --ds-tag-bg-hover: var(--ds-color-tag-blue-subtle-hover-bg);
+  --ds-tag-text: var(--ds-color-tags-and-scale-tag-blue-subtle-text);
+  --ds-tag-border: transparent;
+  --ds-tag-icon: var(--ds-color-icon-info);
+}
+.ds-tag[data-color="blue"][data-variant="outline"] {
+  --ds-tag-bg: var(--ds-color-tags-and-scale-tag-blue-outline-bg);
+  --ds-tag-bg-hover: var(--ds-color-tag-blue-outline-hover-bg);
+  --ds-tag-text: var(--ds-color-tags-and-scale-tag-blue-outline-text);
+  --ds-tag-border: var(--ds-color-tags-and-scale-tag-blue-outline-stroke);
+  --ds-tag-icon: var(--ds-color-icon-info);
+}
+.ds-tag[data-color="blue"][data-variant="filled"] {
+  --ds-tag-bg: var(--ds-color-tags-and-scale-tag-blue-filled-bg);
+  --ds-tag-bg-hover: var(--ds-color-tag-blue-filled-hover-bg);
+  --ds-tag-text: var(--ds-color-tags-and-scale-tag-blue-filled-text);
+  --ds-tag-border: transparent;
+  --ds-tag-icon: var(--ds-color-icon-inverse);
+}
+.ds-tag[data-color="purple"][data-variant="subtle"] {
+  --ds-tag-bg: var(--ds-color-tags-and-scale-tag-purple-subtle-bg);
+  --ds-tag-bg-hover: var(--ds-color-tag-purple-subtle-hover-bg);
+  --ds-tag-text: var(--ds-color-tags-and-scale-tag-purple-subtle-text);
+  --ds-tag-border: transparent;
+  --ds-tag-icon: var(--ds-color-purple-600);
+}
+.ds-tag[data-color="purple"][data-variant="outline"] {
+  --ds-tag-bg: var(--ds-color-tags-and-scale-tag-purple-outline-bg);
+  --ds-tag-bg-hover: var(--ds-color-tag-purple-outline-hover-bg);
+  --ds-tag-text: var(--ds-color-tags-and-scale-tag-purple-outline-text);
+  --ds-tag-border: var(--ds-color-tags-and-scale-tag-purple-outline-stroke);
+  --ds-tag-icon: var(--ds-color-purple-600);
+}
+.ds-tag[data-color="purple"][data-variant="filled"] {
+  --ds-tag-bg: var(--ds-color-tags-and-scale-tag-purple-filled-bg);
+  --ds-tag-bg-hover: var(--ds-color-tag-purple-filled-hover-bg);
+  --ds-tag-text: var(--ds-color-tags-and-scale-tag-purple-filled-text);
+  --ds-tag-border: transparent;
+  --ds-tag-icon: var(--ds-color-icon-inverse);
+}
+.ds-tag[data-color="teal"][data-variant="subtle"] {
+  --ds-tag-bg: var(--ds-color-tags-and-scale-tag-teal-subtle-bg);
+  --ds-tag-bg-hover: var(--ds-color-tag-teal-subtle-hover-bg);
+  --ds-tag-text: var(--ds-color-tags-and-scale-tag-teal-subtle-text);
+  --ds-tag-border: transparent;
+  --ds-tag-icon: var(--ds-color-teal-600);
+}
+.ds-tag[data-color="teal"][data-variant="outline"] {
+  --ds-tag-bg: var(--ds-color-tags-and-scale-tag-teal-outline-bg);
+  --ds-tag-bg-hover: var(--ds-color-tag-teal-outline-hover-bg);
+  --ds-tag-text: var(--ds-color-tags-and-scale-tag-teal-outline-text);
+  --ds-tag-border: var(--ds-color-tags-and-scale-tag-teal-outline-stroke);
+  --ds-tag-icon: var(--ds-color-teal-600);
+}
+.ds-tag[data-color="teal"][data-variant="filled"] {
+  --ds-tag-bg: var(--ds-color-tags-and-scale-tag-teal-filled-bg);
+  --ds-tag-bg-hover: var(--ds-color-tag-teal-filled-hover-bg);
+  --ds-tag-text: var(--ds-color-tags-and-scale-tag-teal-filled-text);
+  --ds-tag-border: transparent;
+  --ds-tag-icon: var(--ds-color-icon-inverse);
+}
+.ds-tag[data-color="grey"][data-variant="subtle"] {
+  --ds-tag-bg: var(--ds-color-tags-and-scale-tag-grey-subtle-bg);
+  --ds-tag-bg-hover: var(--ds-color-tag-grey-subtle-hover-bg);
+  --ds-tag-text: var(--ds-color-tags-and-scale-tag-grey-subtle-text);
+  --ds-tag-border: transparent;
+  --ds-tag-icon: var(--ds-color-icon-primary);
+}
+.ds-tag[data-color="grey"][data-variant="outline"] {
+  --ds-tag-bg: var(--ds-color-tags-and-scale-tag-grey-outline-bg);
+  --ds-tag-bg-hover: var(--ds-color-tag-grey-outline-hover-bg);
+  --ds-tag-text: var(--ds-color-tags-and-scale-tag-grey-outline-text);
+  --ds-tag-border: var(--ds-color-tags-and-scale-tag-grey-outline-stroke);
+  --ds-tag-icon: var(--ds-color-icon-primary);
+}
+.ds-tag[data-color="grey"][data-variant="filled"] {
+  --ds-tag-bg: var(--ds-color-tags-and-scale-tag-grey-filled-bg);
+  --ds-tag-bg-hover: var(--ds-color-tag-grey-filled-hover-bg);
+  --ds-tag-text: var(--ds-color-tags-and-scale-tag-grey-filled-text);
+  --ds-tag-border: transparent;
+  --ds-tag-icon: var(--ds-color-icon-inverse);
+}
+
+/* Base */
+.ds-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-tag-gap);
+  box-sizing: border-box;
+  padding: var(--ds-tag-padding-y) var(--ds-tag-padding-x);
+  border-radius: var(--ds-tag-radius);
+  background: var(--ds-tag-bg);
+  /* inset so the 1px outline does not change the tag size (matches Figma inside strokes) */
+  box-shadow: inset 0 0 0 var(--ds-tag-border-width) var(--ds-tag-border);
+  color: var(--ds-tag-text);
+  font-family: var(--ds-font-family);
+  font-size: var(--ds-font-size-body-small);
+  font-weight: var(--ds-font-weight-medium);
+  line-height: var(--ds-line-height-body-small);
+  letter-spacing: var(--ds-letter-spacing-body-small);
+  white-space: nowrap;
+}
+.ds-tag__label {
+  text-align: center;
+}
+.ds-tag__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: var(--ds-tag-icon-size);
+  height: var(--ds-tag-icon-size);
+  color: var(--ds-tag-icon);
+}
+.ds-tag__icon > svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* State */
+.ds-tag:hover,
+.ds-tag[data-state="hover"] {
+  background: var(--ds-tag-bg-hover);
+}

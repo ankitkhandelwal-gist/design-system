@@ -42,6 +42,12 @@ write("primitives.css", [...primitives].map(([n, v]) => `${primVar(n)}: ${v};`))
 const semantic = readFileSync(resolve("tokens/semantic-colors.txt"), "utf8")
   .split("\n").filter((l) => l.trim() && !l.startsWith("#"))
   .map((l) => l.split(" => ").map((s) => s.trim()) as [string, string]);
+// Second color collection ("Tag" in Figma): names are prefixed so they emit as --ds-color-tag-*.
+const tag = readFileSync(resolve("tokens/tag-colors.txt"), "utf8")
+  .split("\n").filter((l) => l.trim() && !l.startsWith("#"))
+  .map((l) => l.split(" => ").map((s) => s.trim()) as [string, string])
+  .map(([n, t]) => [`Tag/${n}`, t] as [string, string]);
+semantic.push(...tag);
 const semNames = new Set(semantic.map(([n]) => n));
 const semVar = (name: string) => `--ds-color-${slug(name)}`;
 const skipped: string[] = [];
