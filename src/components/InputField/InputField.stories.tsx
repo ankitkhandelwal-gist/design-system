@@ -1,7 +1,11 @@
-import type { CSSProperties, ReactNode } from "react";
+import { useState, type CSSProperties, type ReactNode } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { CloseIcon, DeleteIcon, InfoIcon, SearchIcon } from "../../icons";
 import { DefaultStoryIcon, iconMapping, iconOptions } from "../../icons/storyIcons";
-import { InputField } from "./InputField";
+import { InputField, type InputFieldProps } from "./InputField";
+
+/** Stories drive the field through Controls, so they use the variant without a trailing icon action. */
+type StoryProps = Extract<InputFieldProps, { onTrailingIconClick?: undefined }>;
 
 const Icon = DefaultStoryIcon;
 const icon = (name: string) => name as unknown as ReactNode;
@@ -47,7 +51,7 @@ const meta = {
       </div>
     ),
   ],
-} satisfies Meta<typeof InputField>;
+} satisfies Meta<StoryProps>;
 export default meta;
 type Story = StoryObj<typeof meta>;
 
@@ -132,6 +136,72 @@ export const HelperText: Story = {
       <Case name="Error"><InputField label="Username" status="error" defaultValue="ab" helperText="Must be at least 3 characters" /></Case>
       <Case name="Success"><InputField label="Username" status="success" defaultValue="ankit" helperText="Username is available" /></Case>
       <Case name="Hidden"><InputField label="Username" placeholder="Placeholder text" helperText="Hidden" showHelperText={false} /></Case>
+    </div>
+  ),
+};
+
+function ClearExample() {
+  const [value, setValue] = useState("Design systems");
+  return (
+    <InputField
+      aria-label="Search"
+      placeholder="Search..."
+      leadingIcon={<SearchIcon />}
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
+      showTrailingIcon={value !== ""}
+      trailingIcon={<CloseIcon />}
+      trailingIconLabel="Clear search"
+      onTrailingIconClick={() => setValue("")}
+    />
+  );
+}
+
+function DeleteExample() {
+  const [items, setItems] = useState(["Primary contact", "Billing contact"]);
+  return (
+    <div style={{ display: "grid", gap: 12 }}>
+      {items.map((item) => (
+        <InputField
+          key={item}
+          aria-label={item}
+          defaultValue={item}
+          trailingIcon={<DeleteIcon />}
+          trailingIconLabel={`Delete ${item}`}
+          onTrailingIconClick={() => setItems((all) => all.filter((i) => i !== item))}
+        />
+      ))}
+      {items.length === 0 ? <span style={caption}>All entries deleted. Reload the story to reset.</span> : null}
+    </div>
+  );
+}
+
+function InfoExample() {
+  const [open, setOpen] = useState(false);
+  return (
+    <InputField
+      label="API key"
+      placeholder="Paste your key"
+      trailingIcon={<InfoIcon />}
+      trailingIconLabel="More information about API keys"
+      onTrailingIconClick={() => setOpen((o) => !o)}
+      helperText={open ? "Find your key under Settings > Developers." : "Select the info icon for help."}
+    />
+  );
+}
+
+/**
+ * The trailing icon can have an action. The component does not decide what it does: pass any icon, a label
+ * (its accessible name) and a handler. The leading icon never has an action.
+ */
+export const TrailingIconAction: Story = {
+  parameters: { controls: { disable: true } },
+  decorators: [],
+  render: () => (
+    <div style={column}>
+      <Case name="Clear (icon: close)"><ClearExample /></Case>
+      <Case name="Delete (icon: delete)"><DeleteExample /></Case>
+      <Case name="Info (icon: info), toggles the helper text"><InfoExample /></Case>
     </div>
   ),
 };

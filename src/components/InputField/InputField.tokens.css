@@ -128,6 +128,19 @@
   width: 100%;
   height: 100%;
 }
+/* Trailing icon with an action (onTrailingIconClick): same box, rendered as a button */
+.ds-input-field__icon-button {
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.ds-input-field__icon-button:disabled {
+  cursor: not-allowed;
+}
 .ds-input-field__icon--leading {
   width: var(--ds-input-field-leading-icon-size);
   height: var(--ds-input-field-leading-icon-size);

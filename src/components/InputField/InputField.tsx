@@ -1,10 +1,10 @@
 import { useId } from "react";
-import type { ComponentPropsWithRef, ReactNode } from "react";
+import type { ComponentPropsWithRef, MouseEventHandler, ReactNode } from "react";
 import "./InputField.tokens.css";
 
 export type InputFieldStatus = "default" | "error" | "success";
 
-export interface InputFieldProps extends Omit<ComponentPropsWithRef<"input">, "className"> {
+interface InputFieldBaseProps extends Omit<ComponentPropsWithRef<"input">, "className"> {
   /** The field label. Maps to the Figma `Label` property. Without it, pass `aria-label`. */
   label?: string;
   /** Show or hide the icon next to the label without removing it. Maps to Figma `Show Label Icon`. */
@@ -32,6 +32,16 @@ export interface InputFieldProps extends Omit<ComponentPropsWithRef<"input">, "c
 }
 
 /**
+ * Optional action on the trailing icon (e.g. a clear button). When set, the trailing icon renders as a
+ * real `<button>` and needs an accessible name. Without it the icon is decorative.
+ */
+type TrailingIconAction =
+  | { onTrailingIconClick?: undefined; trailingIconLabel?: string }
+  | { onTrailingIconClick: MouseEventHandler<HTMLButtonElement>; trailingIconLabel: string };
+
+export type InputFieldProps = InputFieldBaseProps & TrailingIconAction;
+
+/**
  * Figma states map to: Default (idle), Focused (:focus-within), Filled (has a value),
  * Error / Success (`status`), Disabled (`disabled`).
  */
@@ -44,6 +54,8 @@ export function InputField({
   leadingIcon,
   showTrailingIcon = true,
   trailingIcon,
+  onTrailingIconClick,
+  trailingIconLabel,
   showHelperText = true,
   helperText,
   status = "default",
@@ -98,7 +110,19 @@ export function InputField({
           {...rest}
         />
         {showTrailingIcon && trailingIcon ? (
-          <span className="ds-input-field__icon ds-input-field__icon--trailing" aria-hidden="true">{trailingIcon}</span>
+          onTrailingIconClick ? (
+            <button
+              type="button"
+              className="ds-input-field__icon ds-input-field__icon--trailing ds-input-field__icon-button"
+              aria-label={trailingIconLabel}
+              disabled={disabled}
+              onClick={onTrailingIconClick}
+            >
+              {trailingIcon}
+            </button>
+          ) : (
+            <span className="ds-input-field__icon ds-input-field__icon--trailing" aria-hidden="true">{trailingIcon}</span>
+          )
         ) : null}
       </div>
 

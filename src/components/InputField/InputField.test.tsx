@@ -100,6 +100,31 @@ describe("InputField", () => {
     expect(screen.queryByTestId("lab")).toBeNull();
   });
 
+  it("renders the trailing icon as a labelled button when onTrailingIconClick is set", () => {
+    const onClick = vi.fn();
+    render(
+      <InputField
+        aria-label="Search"
+        trailingIcon={<svg />}
+        onTrailingIconClick={onClick}
+        trailingIconLabel="Clear search"
+      />,
+    );
+    const button = screen.getByRole("button", { name: "Clear search" }) as HTMLButtonElement;
+    expect(button.type).toBe("button");
+    fireEvent.click(button);
+    expect(onClick).toHaveBeenCalledTimes(1);
+  });
+
+  it("keeps the trailing icon decorative without an action, and disables the button when disabled", () => {
+    const { rerender } = render(<InputField aria-label="Search" trailingIcon={<svg data-testid="t" />} />);
+    expect(screen.queryByRole("button")).toBeNull();
+    rerender(
+      <InputField aria-label="Search" disabled trailingIcon={<svg />} onTrailingIconClick={() => {}} trailingIconLabel="Clear" />,
+    );
+    expect((screen.getByRole("button", { name: "Clear" }) as HTMLButtonElement).disabled).toBe(true);
+  });
+
   it("forwards ref to the input and className to the root", () => {
     const ref = createRef<HTMLInputElement>();
     render(<InputField label="A" ref={ref} className="custom" />);

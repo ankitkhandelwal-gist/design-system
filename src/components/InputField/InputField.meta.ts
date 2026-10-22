@@ -28,6 +28,15 @@ export default defineMeta({
       type: "ReactNode",
       description: "Icon inside the field after the text (16px). Takes the error or success color from status. Decorative.",
     },
+    onTrailingIconClick: {
+      type: "MouseEventHandler<HTMLButtonElement>",
+      description:
+        "Makes the trailing icon a button. The component does not define what it does: pass any icon and any handler (clear, delete, open help...). Requires trailingIconLabel. Without it the icon is decorative. The leading icon has no action.",
+    },
+    trailingIconLabel: {
+      type: "string",
+      description: "Accessible name of the trailing icon button. Required when onTrailingIconClick is set.",
+    },
     showHelperText: { type: "boolean", default: true, description: "Show or hide the helper text. Figma: Show Subtext." },
     helperText: { type: "string", description: "Text below the field. Figma: Subtext. Colored by status." },
     status: {
@@ -54,16 +63,16 @@ export default defineMeta({
 
   relationships: {
     commonPartners: ["Button", "Dropdown", "Tooltip", "Snackbar"],
-    triggers: ["onChange", "onFocus", "onBlur"],
+    triggers: ["onChange", "onFocus", "onBlur", "onTrailingIconClick"],
     exposesState: ["value", "focused", "status"],
     blocksWhen: [
       { when: "disabled is true", effect: "The field cannot be focused or edited and all colors switch to the disabled set." },
     ],
     role: "textbox (native input). The label is a real <label>; helper text is linked with aria-describedby.",
     keyboardSupport:
-      "Tab focuses the input and shows the focus ring. Standard text editing keys apply. Disabled fields are skipped.",
+      "Tab focuses the input and shows the focus ring. Standard text editing keys apply. A trailing icon with an action is the next tab stop; Enter and Space activate it. Disabled fields are skipped.",
     screenReader:
-      "Announced with its label, required state and helper text. error sets aria-invalid. Icons are aria-hidden, so the status must also appear in the helper text, not only in color or icons.",
+      "Announced with its label, required state and helper text. error sets aria-invalid. Icons are aria-hidden, so the status must also appear in the helper text, not only in color or icons. A trailing icon with an action is a button named by trailingIconLabel.",
   },
 
   tokens: {
@@ -137,6 +146,14 @@ export default defineMeta({
       commonPatterns: [
         { name: "Required form field", composition: "InputField[label, required, helperText] stacked 16px apart in a form" },
         { name: "Search", composition: "InputField[leadingIcon=search, placeholder, no label]" },
+        {
+          name: "Trailing icon action",
+          composition: "InputField[trailingIcon=any icon (close, delete, info...), trailingIconLabel=what it does, onTrailingIconClick=the action]. The leading icon is always decorative.",
+        },
+        {
+          name: "Search with clear button",
+          composition: "InputField[aria-label=Search, leadingIcon=search, trailingIcon=close, onTrailingIconClick=clear, trailingIconLabel=Clear search, showTrailingIcon only when there is a value]",
+        },
         { name: "Validation error", composition: "InputField[status=error, helperText=how to fix, trailingIcon=error]" },
         { name: "Form footer", composition: "InputField(s) above Button[secondary] + Button[primary]" },
       ],
