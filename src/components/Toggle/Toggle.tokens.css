@@ -1,0 +1,132 @@
+/*
+ * Toggle: component-scoped tokens (aliases of global tokens in src/tokens) and styles.
+ * Spec source: Figma "Toggle" component set, node 543:998 (Size small/medium/large x Default/Active/Disabled).
+ * Geometry: knob size + 2px padding (spacing-1) around it. Track height = knob + 2*padding,
+ * track width = 2*knob + 3*padding. Checked moves the knob by knob + padding.
+ */
+
+.ds-toggle {
+  --ds-toggle-gap: var(--ds-spacing-4);
+  --ds-toggle-knob-size: var(--ds-spacing-6);
+  --ds-toggle-padding: var(--ds-spacing-1);
+  --ds-toggle-text-gap: var(--ds-spacing-2);
+  --ds-toggle-label-size: var(--ds-font-size-body-medium);
+  --ds-toggle-label-line-height: var(--ds-line-height-body-medium);
+  --ds-toggle-label-letter-spacing: var(--ds-letter-spacing-body-medium);
+  --ds-toggle-subtext-size: var(--ds-font-size-body-small);
+  --ds-toggle-subtext-line-height: var(--ds-line-height-body-small);
+  --ds-toggle-subtext-letter-spacing: var(--ds-letter-spacing-body-small);
+  --ds-toggle-track-height: calc(var(--ds-toggle-knob-size) + 2 * var(--ds-toggle-padding));
+  --ds-toggle-track-width: calc(2 * var(--ds-toggle-knob-size) + 3 * var(--ds-toggle-padding));
+  --ds-toggle-focus-ring: var(--ds-color-border-primary-focus);
+  /* Figma sets the whole disabled toggle to 60% opacity (no token for it). */
+  --ds-toggle-disabled-opacity: 0.6;
+
+  --ds-toggle-track-off: var(--ds-color-toggle-inactive-bg);
+  --ds-toggle-track-on: var(--ds-color-toggle-active-bg);
+  --ds-toggle-track-disabled: var(--ds-color-toggle-disabled-bg);
+  --ds-toggle-knob-color: var(--ds-color-toggle-knob);
+  --ds-toggle-label-color: var(--ds-color-toggle-text);
+  --ds-toggle-subtext-color: var(--ds-color-toggle-subtext);
+}
+
+.ds-toggle[data-size="small"] {
+  --ds-toggle-gap: var(--ds-spacing-3);
+  --ds-toggle-knob-size: var(--ds-spacing-5);
+  --ds-toggle-label-size: var(--ds-font-size-body-small);
+  --ds-toggle-label-line-height: var(--ds-line-height-body-small);
+  --ds-toggle-label-letter-spacing: var(--ds-letter-spacing-body-small);
+  --ds-toggle-subtext-size: var(--ds-font-size-body-xsmall);
+  --ds-toggle-subtext-line-height: var(--ds-line-height-body-xsmall);
+  --ds-toggle-subtext-letter-spacing: var(--ds-letter-spacing-body-xsmall);
+}
+.ds-toggle[data-size="large"] {
+  --ds-toggle-gap: var(--ds-spacing-5);
+  --ds-toggle-knob-size: var(--ds-spacing-7);
+  --ds-toggle-label-size: var(--ds-font-size-body-large);
+  --ds-toggle-label-line-height: var(--ds-line-height-body-large);
+  --ds-toggle-label-letter-spacing: var(--ds-letter-spacing-body-large);
+  --ds-toggle-subtext-size: var(--ds-font-size-body-medium);
+  --ds-toggle-subtext-line-height: var(--ds-line-height-body-medium);
+  --ds-toggle-subtext-letter-spacing: var(--ds-letter-spacing-body-medium);
+}
+
+/* Disabled */
+.ds-toggle[data-disabled] {
+  --ds-toggle-label-color: var(--ds-color-toggle-disabled-text);
+  --ds-toggle-subtext-color: var(--ds-color-toggle-disabled-text);
+  opacity: var(--ds-toggle-disabled-opacity);
+  cursor: not-allowed;
+}
+
+/* Layout */
+.ds-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--ds-toggle-gap);
+  font-family: var(--ds-font-family);
+  cursor: pointer;
+}
+/* The native checkbox stays in the DOM for keyboard, forms and screen readers, but is not drawn. */
+.ds-toggle__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+.ds-toggle__track {
+  position: relative;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: var(--ds-toggle-track-width);
+  height: var(--ds-toggle-track-height);
+  border-radius: var(--ds-radius-full);
+  background: var(--ds-toggle-track-off);
+}
+.ds-toggle__knob {
+  position: absolute;
+  top: var(--ds-toggle-padding);
+  left: var(--ds-toggle-padding);
+  width: var(--ds-toggle-knob-size);
+  height: var(--ds-toggle-knob-size);
+  border-radius: 50%;
+  background: var(--ds-toggle-knob-color);
+}
+.ds-toggle__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-toggle-text-gap);
+}
+.ds-toggle__label {
+  color: var(--ds-toggle-label-color);
+  font-size: var(--ds-toggle-label-size);
+  font-weight: var(--ds-font-weight-medium);
+  line-height: var(--ds-toggle-label-line-height);
+  letter-spacing: var(--ds-toggle-label-letter-spacing);
+}
+.ds-toggle__subtext {
+  color: var(--ds-toggle-subtext-color);
+  font-size: var(--ds-toggle-subtext-size);
+  font-weight: var(--ds-font-weight-regular);
+  line-height: var(--ds-toggle-subtext-line-height);
+  letter-spacing: var(--ds-toggle-subtext-letter-spacing);
+}
+
+/* States */
+.ds-toggle__input:checked + .ds-toggle__track {
+  background: var(--ds-toggle-track-on);
+}
+.ds-toggle__input:checked + .ds-toggle__track .ds-toggle__knob {
+  transform: translateX(calc(var(--ds-toggle-knob-size) + var(--ds-toggle-padding)));
+}
+.ds-toggle__input:disabled + .ds-toggle__track {
+  background: var(--ds-toggle-track-disabled);
+}
+/* Not in Figma: a visible keyboard focus ring (same focus color as Button) so the switch is usable without a mouse. */
+.ds-toggle__input:focus-visible + .ds-toggle__track {
+  outline: var(--ds-spacing-1) solid var(--ds-toggle-focus-ring);
+  outline-offset: var(--ds-spacing-1);
+}
