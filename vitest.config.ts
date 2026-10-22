@@ -2,6 +2,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { defineConfig } from 'vitest/config';
+import { svgrPlugin } from './vite.svgr.ts';
 
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 
@@ -12,6 +13,9 @@ const dirname =
 
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
+  plugins: [svgrPlugin()],
+  // svgr output imports react/jsx-runtime; pre-bundle it so browser-mode tests can import it
+  optimizeDeps: { include: ['react/jsx-runtime', 'react', 'react-dom'] },
   test: {
     projects: [
       {

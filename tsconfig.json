@@ -16,6 +16,6 @@
     "outDir": "dist",
     "rootDir": "."
   },
-  "include": ["src", "scripts"],
+  "include": ["src", "scripts", "vite.svgr.ts"],
   "exclude": ["node_modules", "dist"]
 }

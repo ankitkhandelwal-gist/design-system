@@ -34,3 +34,11 @@ Regenerate with `npm run build:tokens`.
 - Naming: `--ds-color-*`, `--ds-font-*`, `--ds-line-height-*`, `--ds-letter-spacing-*`, `--ds-spacing-*`, `--ds-radius-*`, `--ds-icon-size-*`, `--ds-shadow-*`.
 - Component-scoped tokens in `<Name>.tokens.css` should alias these globals.
 - Meta `tokens` sections list the global token names a component uses.
+
+## Icons
+Icons come from Google Material Symbols (Rounded, 400) via `@material-symbols/svg-400` (Apache-2.0, see `THIRD_PARTY_NOTICES.md`). Do not copy or generate SVG files.
+- Import icons from `src/icons` (`import { SearchIcon } from "../../icons"`), never from the package directly in components. Each icon is its own import, so apps only bundle what they use.
+- Naming: `<Name>Icon` is the outline style, `<Name>FilledIcon` the filled style (e.g. `InfoIcon`, `InfoFilledIcon`).
+- To add an icon: add one `export` line to `src/icons/index.ts`. File names use underscores (`node_modules/@material-symbols/svg-400/rounded/`). Pick outline or `-fill` by looking at the Figma icon.
+- Icons use `currentColor` and a 1em default size (svgr options in `vite.svgr.ts`). Components size and color them through CSS, so pass them as `leadingIcon`/`trailingIcon` props and never set colors or sizes on the icon itself.
+- The Storybook icon dropdowns list every `*Icon` exported from `src/icons` automatically.
