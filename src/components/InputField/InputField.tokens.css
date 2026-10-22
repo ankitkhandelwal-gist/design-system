@@ -1,0 +1,164 @@
+/*
+ * InputField: component-scoped tokens (aliases of global tokens in src/tokens) and styles.
+ * Spec source: Figma "Input Field" component set, node 1198:36037 (Default, Focused, Filled, Error, Success, Disabled).
+ * States: Focused = :focus-within, Filled = input has a value, Error/Success = [data-status],
+ * Disabled = [data-disabled]. `data-state="focused"` on the field or any ancestor forces the focused look for stories.
+ */
+
+.ds-input-field {
+  --ds-input-field-gap: var(--ds-spacing-2);
+  --ds-input-field-padding-x: var(--ds-spacing-5);
+  --ds-input-field-padding-y: var(--ds-spacing-4);
+  --ds-input-field-container-gap: var(--ds-spacing-4);
+  --ds-input-field-radius: var(--ds-radius-md);
+  --ds-input-field-border-width: 1px;
+  --ds-input-field-focus-ring-width: 3px;
+  --ds-input-field-leading-icon-size: var(--ds-icon-size-medium);
+  --ds-input-field-trailing-icon-size: var(--ds-icon-size-small);
+  --ds-input-field-label-icon-size: var(--ds-icon-size-small);
+
+  --ds-input-field-bg: var(--ds-color-input-bg);
+  --ds-input-field-border: var(--ds-color-input-border);
+  --ds-input-field-border-focus: var(--ds-color-input-border-focus);
+  /* Figma's focus ring color (#b0bac9 at 50%) is not bound to any variable. Add a token in Figma, then alias it here. */
+  --ds-input-field-focus-ring: rgb(176 186 201 / 0.5);
+  --ds-input-field-text: var(--ds-color-input-text);
+  --ds-input-field-placeholder: var(--ds-color-input-placeholder);
+  --ds-input-field-label: var(--ds-color-input-label);
+  --ds-input-field-mandatory: var(--ds-color-input-mandatory);
+  --ds-input-field-helper: var(--ds-color-input-helper-text);
+  --ds-input-field-icon-leading: var(--ds-color-icon-primary);
+  --ds-input-field-icon-trailing: var(--ds-color-icon-secondary);
+  --ds-input-field-icon-label: var(--ds-color-icon-secondary);
+}
+
+/* Status */
+.ds-input-field[data-status="error"] {
+  --ds-input-field-border: var(--ds-color-input-border-error);
+  --ds-input-field-border-focus: var(--ds-color-input-border-error);
+  --ds-input-field-focus-ring: color-mix(in srgb, var(--ds-color-border-error-focus) 50%, transparent);
+  --ds-input-field-helper: var(--ds-color-text-error);
+  --ds-input-field-icon-trailing: var(--ds-color-icon-error);
+}
+.ds-input-field[data-status="success"] {
+  --ds-input-field-border: var(--ds-color-border-success);
+  --ds-input-field-border-focus: var(--ds-color-border-success);
+  --ds-input-field-focus-ring: color-mix(in srgb, var(--ds-color-border-success-focus) 50%, transparent);
+  --ds-input-field-helper: var(--ds-color-text-success);
+  --ds-input-field-icon-trailing: var(--ds-color-icon-success);
+}
+
+/* Disabled */
+.ds-input-field[data-disabled] {
+  --ds-input-field-bg: var(--ds-color-input-disabled-bg);
+  --ds-input-field-border: var(--ds-color-border-disabled);
+  --ds-input-field-text: var(--ds-color-input-disabled-text);
+  --ds-input-field-placeholder: var(--ds-color-input-disabled-text);
+  --ds-input-field-label: var(--ds-color-text-disabled);
+  --ds-input-field-helper: var(--ds-color-text-disabled);
+  --ds-input-field-icon-leading: var(--ds-color-icon-disabled);
+  --ds-input-field-icon-trailing: var(--ds-color-icon-disabled);
+  --ds-input-field-icon-label: var(--ds-color-icon-disabled);
+}
+
+/* Layout */
+.ds-input-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-input-field-gap);
+  width: 100%;
+  box-sizing: border-box;
+  font-family: var(--ds-font-family);
+}
+.ds-input-field__label-row {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-spacing-2);
+}
+.ds-input-field__label,
+.ds-input-field__mandatory {
+  font-size: var(--ds-font-size-body-medium);
+  font-weight: var(--ds-font-weight-medium);
+  line-height: var(--ds-line-height-body-medium);
+  letter-spacing: var(--ds-letter-spacing-body-medium);
+}
+.ds-input-field__label {
+  color: var(--ds-input-field-label);
+}
+.ds-input-field__mandatory {
+  color: var(--ds-input-field-mandatory);
+}
+.ds-input-field__container {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-input-field-container-gap);
+  box-sizing: border-box;
+  padding: var(--ds-input-field-padding-y) var(--ds-input-field-padding-x);
+  border: var(--ds-input-field-border-width) solid var(--ds-input-field-border);
+  border-radius: var(--ds-input-field-radius);
+  background: var(--ds-input-field-bg);
+}
+.ds-input-field__input {
+  flex: 1 1 0;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ds-input-field-text);
+  font-family: inherit;
+  font-size: var(--ds-font-size-body-medium);
+  font-weight: var(--ds-font-weight-regular);
+  line-height: var(--ds-line-height-body-medium);
+  letter-spacing: var(--ds-letter-spacing-body-medium);
+}
+.ds-input-field__input::placeholder {
+  color: var(--ds-input-field-placeholder);
+  opacity: 1;
+}
+.ds-input-field__input:disabled {
+  cursor: not-allowed;
+}
+.ds-input-field__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+.ds-input-field__icon > svg {
+  width: 100%;
+  height: 100%;
+}
+.ds-input-field__icon--leading {
+  width: var(--ds-input-field-leading-icon-size);
+  height: var(--ds-input-field-leading-icon-size);
+  color: var(--ds-input-field-icon-leading);
+}
+.ds-input-field__icon--trailing {
+  width: var(--ds-input-field-trailing-icon-size);
+  height: var(--ds-input-field-trailing-icon-size);
+  color: var(--ds-input-field-icon-trailing);
+}
+.ds-input-field__icon--label {
+  width: var(--ds-input-field-label-icon-size);
+  height: var(--ds-input-field-label-icon-size);
+  color: var(--ds-input-field-icon-label);
+}
+.ds-input-field__helper {
+  color: var(--ds-input-field-helper);
+  font-size: var(--ds-font-size-body-small);
+  font-weight: var(--ds-font-weight-regular);
+  line-height: var(--ds-line-height-body-small);
+  letter-spacing: var(--ds-letter-spacing-body-small);
+}
+
+/* Focused: border color plus a 3px outer ring */
+.ds-input-field:not([data-disabled]) .ds-input-field__container:focus-within,
+[data-state="focused"] .ds-input-field__container {
+  border-color: var(--ds-input-field-border-focus);
+  box-shadow: 0 0 0 var(--ds-input-field-focus-ring-width) var(--ds-input-field-focus-ring);
+}
+/* Error and Success also show the ring when idle (Figma draws it in those states) */
+.ds-input-field[data-status="error"]:not([data-disabled]) .ds-input-field__container,
+.ds-input-field[data-status="success"]:not([data-disabled]) .ds-input-field__container {
+  box-shadow: 0 0 0 var(--ds-input-field-focus-ring-width) var(--ds-input-field-focus-ring);
+}
