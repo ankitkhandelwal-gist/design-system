@@ -1,10 +1,10 @@
-import type { ComponentPropsWithRef, ReactNode } from "react";
+import type { ComponentPropsWithRef, MouseEventHandler, ReactNode, Ref } from "react";
 import "./Tag.tokens.css";
 
 export type TagColor = "red" | "green" | "orange" | "blue" | "purple" | "teal" | "grey";
 export type TagVariant = "subtle" | "outline" | "filled";
 
-export interface TagProps extends Omit<ComponentPropsWithRef<"span">, "children" | "color"> {
+export interface TagProps extends Omit<ComponentPropsWithRef<"span">, "children" | "color" | "onClick" | "ref"> {
   /** The tag text. Maps to the Figma `Label` property. */
   children: ReactNode;
   /** Color family. Maps to the Figma `Color` property. */
@@ -19,6 +19,12 @@ export interface TagProps extends Omit<ComponentPropsWithRef<"span">, "children"
   showTrailingIcon?: boolean;
   /** Icon shown after the label. Decorative (aria-hidden). */
   trailingIcon?: ReactNode;
+  /**
+   * Makes the tag clickable: it renders as a `<button>` with hover, focus and keyboard support.
+   * Without it the tag is static text (a `<span>`) and does not react to hover.
+   */
+  onClick?: MouseEventHandler<HTMLElement>;
+  ref?: Ref<HTMLElement>;
 }
 
 export function Tag({
@@ -28,17 +34,20 @@ export function Tag({
   leadingIcon,
   showTrailingIcon = true,
   trailingIcon,
+  onClick,
+  ref,
   className,
   children,
   ...rest
 }: TagProps) {
-  return (
-    <span
-      className={className ? `ds-tag ${className}` : "ds-tag"}
-      data-color={color}
-      data-variant={variant}
-      {...rest}
-    >
+  const props = {
+    className: className ? `ds-tag ${className}` : "ds-tag",
+    "data-color": color,
+    "data-variant": variant,
+    ...rest,
+  };
+  const content = (
+    <>
       {showLeadingIcon && leadingIcon ? (
         <span className="ds-tag__icon" aria-hidden="true">{leadingIcon}</span>
       ) : null}
@@ -46,6 +55,16 @@ export function Tag({
       {showTrailingIcon && trailingIcon ? (
         <span className="ds-tag__icon" aria-hidden="true">{trailingIcon}</span>
       ) : null}
+    </>
+  );
+
+  return onClick ? (
+    <button type="button" data-interactive="" onClick={onClick} ref={ref as Ref<HTMLButtonElement>} {...props}>
+      {content}
+    </button>
+  ) : (
+    <span ref={ref as Ref<HTMLSpanElement>} {...props}>
+      {content}
     </span>
   );
 }

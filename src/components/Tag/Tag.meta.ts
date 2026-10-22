@@ -6,7 +6,7 @@ export default defineMeta({
     category: "atoms",
     type: "display",
     description:
-      "A small label that communicates status, category or metadata. Seven colors and three fill styles, with optional leading and trailing icons.",
+      "A small label that communicates status, category or metadata. Seven colors and three fill styles, with optional leading and trailing icons. Static by default; clickable (with hover) only when onClick is passed.",
     path: "src/components/Tag",
     figma: { nodeId: "283:191" },
   },
@@ -37,6 +37,11 @@ export default defineMeta({
       description: "Show or hide the trailing icon without removing it. Maps to Figma `Show Trailing Icon`.",
     },
     trailingIcon: { type: "ReactNode", description: "Icon after the label. Decorative (aria-hidden)." },
+    onClick: {
+      type: "MouseEventHandler<HTMLElement>",
+      description:
+        "Makes the tag clickable: renders a <button> with hover, focus and keyboard support. Omit for a static status tag, which does not react to hover.",
+    },
   },
 
   variants: {
@@ -60,8 +65,10 @@ export default defineMeta({
 
   relationships: {
     commonPartners: ["Table", "Card", "KeyValue", "Dropdown"],
-    role: "generic (no role). Static text; add role=status only if the tag announces a live change.",
-    keyboardSupport: "Not focusable. A tag is a non-interactive display element.",
+    triggers: ["onClick"],
+    role: "generic (static) or button (when onClick is passed). Add role=status only if a static tag announces a live change.",
+    keyboardSupport:
+      "Static tags are not focusable. Clickable tags are buttons: Tab focuses, Enter and Space activate.",
     screenReader:
       "Read as plain text. Meaning must be in the label, never in the color alone. Icons are aria-hidden.",
   },
@@ -197,6 +204,7 @@ export default defineMeta({
       commonPatterns: [
         { name: "Status in table row", composition: "Tag[color=green|orange|red, variant=subtle] with the status text" },
         { name: "Category", composition: "Tag[color=purple|teal, variant=outline] with showLeadingIcon" },
+        { name: "Clickable tag", composition: "Tag with onClick (renders a button), e.g. a category that opens a filtered view" },
         { name: "Emphasized state", composition: "Tag[variant=filled] for the one critical status in a view" },
       ],
       antiPatterns: [
@@ -206,9 +214,14 @@ export default defineMeta({
           alternative: "Always put the status in the label text; icons are decorative.",
         },
         {
-          scenario: "Using Tag as a button or filter chip",
-          reason: "Tag is not focusable and has no interaction semantics.",
-          alternative: "Use Button (tertiary/link) or a dedicated chip component.",
+          scenario: "Making a status tag clickable just to get the hover effect",
+          reason: "Hover signals interactivity. A tag that only shows status should stay static.",
+          alternative: "Omit onClick so the tag is static; use onClick only when it really does something.",
+        },
+        {
+          scenario: "Using Tag as a toggleable or removable filter chip",
+          reason: "Tag has no selected or remove state.",
+          alternative: "Use a dedicated chip component.",
         },
         {
           scenario: "Mixing many filled tags in one view",

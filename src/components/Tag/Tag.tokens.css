@@ -1,7 +1,8 @@
 /*
  * Tag: component-scoped tokens (aliases of global tokens in src/tokens) and styles.
  * Spec source: Figma "Tag" component set, node 283:191 (7 colors x 3 types x Default/Hover).
- * `data-state="hover"` forces the hover look for stories; real usage relies on :hover.
+ * Hover only applies to clickable tags (`data-interactive`, set when onClick is passed). Static tags do not react.
+ * `data-state="hover"` forces the hover look for stories.
  * Purple and Teal icons use primitives (Purple/600, Teal/600) because Figma has no semantic icon token for them.
  */
 
@@ -204,7 +205,12 @@
 }
 
 /* State */
-.ds-tag:hover,
+.ds-tag[data-interactive] {
+  margin: 0;
+  border: 0;
+  cursor: pointer;
+}
+.ds-tag[data-interactive]:hover,
 .ds-tag[data-state="hover"] {
   background: var(--ds-tag-bg-hover);
 }

@@ -96,7 +96,7 @@ export const WithIcons: Story = {
   ),
 };
 
-/** Default and Hover for every color and type. Hover is forced via data-state so it can be compared side by side. */
+/** Default and Hover for every color and type. Hover only applies to clickable tags; it is forced here via data-state so both looks can be compared side by side. */
 export const TagStates: Story = {
   parameters: { controls: { disable: true } },
   render: () => (
@@ -105,10 +105,27 @@ export const TagStates: Story = {
         variants.map((v) => (
           <Row key={`${c}-${v}`} name={`${titleCase(c)} ${v}`}>
             <Tag color={c} variant={v} leadingIcon={<Icon />} trailingIcon={<Icon />}>Default</Tag>
-            <Tag color={c} variant={v} data-state="hover" leadingIcon={<Icon />} trailingIcon={<Icon />}>Hover</Tag>
+            <Tag color={c} variant={v} onClick={() => {}} data-state="hover" leadingIcon={<Icon />} trailingIcon={<Icon />}>Hover</Tag>
           </Row>
         )),
       )}
+    </div>
+  ),
+};
+
+/** Passing onClick makes a tag clickable: a real button with hover and focus. Static tags (all other stories) do not react to hover. */
+export const ClickableTag: Story = {
+  parameters: { controls: { disable: true } },
+  render: () => (
+    <div style={column}>
+      <Row name="Static">
+        <Tag color="green" variant="subtle">Active</Tag>
+        <span style={{ ...rowLabel, width: "auto" }}>No hover, not focusable</span>
+      </Row>
+      <Row name="Clickable">
+        <Tag color="green" variant="subtle" onClick={() => {}}>Active</Tag>
+        <span style={{ ...rowLabel, width: "auto" }}>Hover, focus ring, Enter and Space</span>
+      </Row>
     </div>
   ),
 };
