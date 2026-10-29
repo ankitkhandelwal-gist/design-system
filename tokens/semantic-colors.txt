@@ -246,3 +246,5 @@ tags and scale/scale/red/high/bg => Red/300
 tags and scale/scale/red/high/text => Red/900
 tags and scale/scale/red/very-high/bg => Red/400
 tags and scale/scale/red/very-high/text => Red/900
+table/row-selected => Brand Navy Blue/50
+table/header-hover => Blue Grey/100

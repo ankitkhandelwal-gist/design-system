@@ -244,6 +244,8 @@
   --ds-color-tags-and-scale-scale-red-high-text: var(--ds-color-red-900);
   --ds-color-tags-and-scale-scale-red-very-high-bg: var(--ds-color-red-400);
   --ds-color-tags-and-scale-scale-red-very-high-text: var(--ds-color-red-900);
+  --ds-color-table-row-selected: var(--ds-color-brand-navy-blue-50);
+  --ds-color-table-header-hover: var(--ds-color-blue-grey-100);
   --ds-color-tag-disabled-text: var(--ds-color-text-disabled);
   --ds-color-tag-disabled-stroke: var(--ds-color-grey-300);
   --ds-color-tag-red-subtle-hover-bg: var(--ds-color-red-200);
