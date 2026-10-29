@@ -1,0 +1,135 @@
+/*
+ * Radio: component-scoped tokens (aliases of global tokens in src/tokens) and styles.
+ * Spec source: Figma "Radio" component set, node 543:807 (Size small/medium/large x Default/Active/Disabled).
+ * Geometry: circle 16/20/24px with an inside border (1.5px, 2px at large) and a dot half the circle size when selected.
+ */
+
+.ds-radio {
+  --ds-radio-gap: var(--ds-spacing-4);
+  --ds-radio-size: var(--ds-icon-size-medium);
+  --ds-radio-border-width: 1.5px;
+  --ds-radio-text-gap: var(--ds-spacing-2);
+  --ds-radio-label-size: var(--ds-font-size-body-medium);
+  --ds-radio-label-line-height: var(--ds-line-height-body-medium);
+  --ds-radio-label-letter-spacing: var(--ds-letter-spacing-body-medium);
+  --ds-radio-subtext-size: var(--ds-font-size-body-small);
+  --ds-radio-subtext-line-height: var(--ds-line-height-body-small);
+  --ds-radio-subtext-letter-spacing: var(--ds-letter-spacing-body-small);
+  --ds-radio-focus-ring: var(--ds-color-border-primary-focus);
+  /* Figma sets the whole disabled radio to 60% opacity (no token for it). */
+  --ds-radio-disabled-opacity: 0.6;
+
+  --ds-radio-border-off: var(--ds-color-radio-inactive-border);
+  --ds-radio-border-on: var(--ds-color-radio-active-bg);
+  --ds-radio-dot-color: var(--ds-color-radio-active-bg);
+  --ds-radio-fill-disabled: var(--ds-color-radio-disabled-bg);
+  --ds-radio-label-color: var(--ds-color-radio-text);
+  --ds-radio-subtext-color: var(--ds-color-radio-subtext);
+}
+
+.ds-radio[data-size="small"] {
+  --ds-radio-gap: var(--ds-spacing-3);
+  --ds-radio-size: var(--ds-icon-size-small);
+  --ds-radio-label-size: var(--ds-font-size-body-small);
+  --ds-radio-label-line-height: var(--ds-line-height-body-small);
+  --ds-radio-label-letter-spacing: var(--ds-letter-spacing-body-small);
+  --ds-radio-subtext-size: var(--ds-font-size-body-xsmall);
+  --ds-radio-subtext-line-height: var(--ds-line-height-body-xsmall);
+  --ds-radio-subtext-letter-spacing: var(--ds-letter-spacing-body-xsmall);
+}
+.ds-radio[data-size="large"] {
+  --ds-radio-gap: var(--ds-spacing-5);
+  --ds-radio-size: var(--ds-icon-size-large);
+  --ds-radio-border-width: 2px;
+  --ds-radio-label-size: var(--ds-font-size-body-large);
+  --ds-radio-label-line-height: var(--ds-line-height-body-large);
+  --ds-radio-label-letter-spacing: var(--ds-letter-spacing-body-large);
+  --ds-radio-subtext-size: var(--ds-font-size-body-medium);
+  --ds-radio-subtext-line-height: var(--ds-line-height-body-medium);
+  --ds-radio-subtext-letter-spacing: var(--ds-letter-spacing-body-medium);
+}
+
+/* Disabled */
+.ds-radio[data-disabled] {
+  --ds-radio-label-color: var(--ds-color-radio-disabled-text);
+  --ds-radio-subtext-color: var(--ds-color-radio-disabled-text);
+  opacity: var(--ds-radio-disabled-opacity);
+  cursor: not-allowed;
+}
+
+/* Layout */
+.ds-radio {
+  position: relative;
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--ds-radio-gap);
+  font-family: var(--ds-font-family);
+  cursor: pointer;
+}
+/* The native radio stays in the DOM for keyboard, forms and screen readers, but is not drawn. */
+.ds-radio__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+.ds-radio__control {
+  position: relative;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: var(--ds-radio-size);
+  height: var(--ds-radio-size);
+  border: var(--ds-radio-border-width) solid var(--ds-radio-border-off);
+  border-radius: var(--ds-radius-full);
+}
+.ds-radio__dot {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  /* half the circle's outer size, like Figma (8px in 16px), not half of the space inside the border */
+  width: calc(var(--ds-radio-size) / 2);
+  height: calc(var(--ds-radio-size) / 2);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: var(--ds-radio-dot-color);
+}
+.ds-radio__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-radio-text-gap);
+}
+.ds-radio__label {
+  color: var(--ds-radio-label-color);
+  font-size: var(--ds-radio-label-size);
+  font-weight: var(--ds-font-weight-medium);
+  line-height: var(--ds-radio-label-line-height);
+  letter-spacing: var(--ds-radio-label-letter-spacing);
+}
+.ds-radio__subtext {
+  color: var(--ds-radio-subtext-color);
+  font-size: var(--ds-radio-subtext-size);
+  font-weight: var(--ds-font-weight-regular);
+  line-height: var(--ds-radio-subtext-line-height);
+  letter-spacing: var(--ds-radio-subtext-letter-spacing);
+}
+
+/* States */
+.ds-radio__input:checked + .ds-radio__control {
+  border-color: var(--ds-radio-border-on);
+}
+.ds-radio__input:checked + .ds-radio__control .ds-radio__dot {
+  display: block;
+}
+/* Disabled: a filled circle with no border (Figma). Not in Figma for the selected state: the dot stays, so it still reads as selected. */
+.ds-radio__input:disabled + .ds-radio__control {
+  border-color: transparent;
+  background: var(--ds-radio-fill-disabled);
+}
+/* Not in Figma: a visible keyboard focus ring (same focus color as Button) so the radio is usable without a mouse. */
+.ds-radio__input:focus-visible + .ds-radio__control {
+  outline: var(--ds-spacing-1) solid var(--ds-radio-focus-ring);
+  outline-offset: var(--ds-spacing-1);
+}

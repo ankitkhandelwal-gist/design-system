@@ -52,3 +52,8 @@ export { default as ErrorFilledIcon } from "@material-symbols/svg-400/rounded/er
 export { default as WarningFilledIcon } from "@material-symbols/svg-400/rounded/warning-fill.svg?react";
 export { default as CheckCircleFilledIcon } from "@material-symbols/svg-400/rounded/check_circle-fill.svg?react";
 export { default as CancelFilledIcon } from "@material-symbols/svg-400/rounded/cancel-fill.svg?react";
+
+// Used by Checkbox
+export { default as CheckBoxOutlineBlankIcon } from "@material-symbols/svg-400/rounded/check_box_outline_blank.svg?react";
+export { default as CheckBoxFilledIcon } from "@material-symbols/svg-400/rounded/check_box-fill.svg?react";
+export { default as IndeterminateCheckBoxFilledIcon } from "@material-symbols/svg-400/rounded/indeterminate_check_box-fill.svg?react";

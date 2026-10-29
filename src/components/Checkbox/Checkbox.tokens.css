@@ -1,0 +1,141 @@
+/*
+ * Checkbox: component-scoped tokens (aliases of global tokens in src/tokens) and styles.
+ * Spec source: Figma "Checkbox" component set, node 543:631 (Size small/medium/large x Default/Active/Intermediate/Disabled).
+ * The box is a Material Symbols icon (check_box_outline_blank / check_box / indeterminate_check_box), 16/20/24px.
+ */
+
+.ds-checkbox {
+  --ds-checkbox-gap: var(--ds-spacing-4);
+  --ds-checkbox-box-size: var(--ds-icon-size-medium);
+  --ds-checkbox-text-gap: var(--ds-spacing-2);
+  --ds-checkbox-label-size: var(--ds-font-size-body-medium);
+  --ds-checkbox-label-line-height: var(--ds-line-height-body-medium);
+  --ds-checkbox-label-letter-spacing: var(--ds-letter-spacing-body-medium);
+  --ds-checkbox-label-weight: var(--ds-font-weight-regular);
+  --ds-checkbox-subtext-size: var(--ds-font-size-body-small);
+  --ds-checkbox-subtext-line-height: var(--ds-line-height-body-small);
+  --ds-checkbox-subtext-letter-spacing: var(--ds-letter-spacing-body-small);
+  --ds-checkbox-focus-ring: var(--ds-color-border-primary-focus);
+  /* Figma sets the whole disabled checkbox to 60% opacity (no token for it). */
+  --ds-checkbox-disabled-opacity: 0.6;
+
+  --ds-checkbox-box-off: var(--ds-color-checkbox-unchecked-border);
+  --ds-checkbox-box-on: var(--ds-color-checkbox-checked-bg);
+  --ds-checkbox-box-disabled: var(--ds-color-checkbox-disabled-bg);
+  --ds-checkbox-label-color: var(--ds-color-checkbox-text);
+  --ds-checkbox-subtext-color: var(--ds-color-checkbox-subtext);
+}
+
+.ds-checkbox[data-size="small"] {
+  --ds-checkbox-gap: var(--ds-spacing-3);
+  --ds-checkbox-box-size: var(--ds-icon-size-small);
+  --ds-checkbox-label-size: var(--ds-font-size-body-small);
+  --ds-checkbox-label-line-height: var(--ds-line-height-body-small);
+  --ds-checkbox-label-letter-spacing: var(--ds-letter-spacing-body-small);
+  /* In Figma only the Small checkbox has a Medium weight label. */
+  --ds-checkbox-label-weight: var(--ds-font-weight-medium);
+  --ds-checkbox-subtext-size: var(--ds-font-size-body-xsmall);
+  --ds-checkbox-subtext-line-height: var(--ds-line-height-body-xsmall);
+  --ds-checkbox-subtext-letter-spacing: var(--ds-letter-spacing-body-xsmall);
+}
+.ds-checkbox[data-size="large"] {
+  --ds-checkbox-gap: var(--ds-spacing-5);
+  --ds-checkbox-box-size: var(--ds-icon-size-large);
+  --ds-checkbox-label-size: var(--ds-font-size-body-large);
+  --ds-checkbox-label-line-height: var(--ds-line-height-body-large);
+  --ds-checkbox-label-letter-spacing: var(--ds-letter-spacing-body-large);
+  --ds-checkbox-subtext-size: var(--ds-font-size-body-medium);
+  --ds-checkbox-subtext-line-height: var(--ds-line-height-body-medium);
+  --ds-checkbox-subtext-letter-spacing: var(--ds-letter-spacing-body-medium);
+}
+
+/* Disabled */
+.ds-checkbox[data-disabled] {
+  --ds-checkbox-label-color: var(--ds-color-checkbox-disabled-text);
+  --ds-checkbox-subtext-color: var(--ds-color-checkbox-disabled-text);
+  opacity: var(--ds-checkbox-disabled-opacity);
+  cursor: not-allowed;
+}
+
+/* Layout */
+.ds-checkbox {
+  position: relative;
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--ds-checkbox-gap);
+  font-family: var(--ds-font-family);
+  cursor: pointer;
+}
+/* The native checkbox stays in the DOM for keyboard, forms and screen readers, but is not drawn. */
+.ds-checkbox__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+.ds-checkbox__box {
+  position: relative;
+  flex-shrink: 0;
+  width: var(--ds-checkbox-box-size);
+  height: var(--ds-checkbox-box-size);
+  color: var(--ds-checkbox-box-off);
+}
+.ds-checkbox__icon {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+.ds-checkbox__icon--unchecked {
+  display: block;
+}
+.ds-checkbox__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-checkbox-text-gap);
+}
+.ds-checkbox__label {
+  color: var(--ds-checkbox-label-color);
+  font-size: var(--ds-checkbox-label-size);
+  font-weight: var(--ds-checkbox-label-weight);
+  line-height: var(--ds-checkbox-label-line-height);
+  letter-spacing: var(--ds-checkbox-label-letter-spacing);
+}
+.ds-checkbox__subtext {
+  color: var(--ds-checkbox-subtext-color);
+  font-size: var(--ds-checkbox-subtext-size);
+  font-weight: var(--ds-font-weight-regular);
+  line-height: var(--ds-checkbox-subtext-line-height);
+  letter-spacing: var(--ds-checkbox-subtext-letter-spacing);
+}
+
+/* States: checked, then indeterminate (wins), then disabled color */
+.ds-checkbox__input:checked + .ds-checkbox__box {
+  color: var(--ds-checkbox-box-on);
+}
+.ds-checkbox__input:checked + .ds-checkbox__box .ds-checkbox__icon--unchecked,
+.ds-checkbox__input:indeterminate + .ds-checkbox__box .ds-checkbox__icon--unchecked {
+  display: none;
+}
+.ds-checkbox__input:checked + .ds-checkbox__box .ds-checkbox__icon--checked {
+  display: block;
+}
+.ds-checkbox__input:indeterminate + .ds-checkbox__box {
+  color: var(--ds-checkbox-box-on);
+}
+.ds-checkbox__input:indeterminate + .ds-checkbox__box .ds-checkbox__icon--checked {
+  display: none;
+}
+.ds-checkbox__input:indeterminate + .ds-checkbox__box .ds-checkbox__icon--indeterminate {
+  display: block;
+}
+.ds-checkbox__input:disabled + .ds-checkbox__box {
+  color: var(--ds-checkbox-box-disabled);
+}
+/* Not in Figma: a visible keyboard focus ring (same focus color as Button) so the checkbox is usable without a mouse. */
+.ds-checkbox__input:focus-visible + .ds-checkbox__box {
+  outline: var(--ds-spacing-1) solid var(--ds-checkbox-focus-ring);
+  outline-offset: var(--ds-spacing-1);
+  border-radius: var(--ds-radius-sm);
+}
