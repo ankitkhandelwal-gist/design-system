@@ -57,3 +57,6 @@ export { default as CancelFilledIcon } from "@material-symbols/svg-400/rounded/c
 export { default as CheckBoxOutlineBlankIcon } from "@material-symbols/svg-400/rounded/check_box_outline_blank.svg?react";
 export { default as CheckBoxFilledIcon } from "@material-symbols/svg-400/rounded/check_box-fill.svg?react";
 export { default as IndeterminateCheckBoxFilledIcon } from "@material-symbols/svg-400/rounded/indeterminate_check_box-fill.svg?react";
+
+// Used by Dropdown
+export { default as SearchOffIcon } from "@material-symbols/svg-400/rounded/search_off.svg?react";

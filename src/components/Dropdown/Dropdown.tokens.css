@@ -1,0 +1,227 @@
+/*
+ * Dropdown: component-scoped tokens (aliases of global tokens in src/tokens) and styles.
+ * Spec source: Figma "Dropdown (new)" section: Dropdown 1426:626, Dropdown Menu 1426:271, Menu Item 1424:283.
+ * The trigger is an InputField (its own tokens apply). The menu floats 4px below the control and takes no layout space.
+ *
+ * The Figma menu/* color variables (menu/bg, menu/item-hover, ...) are not in the code tokens yet. Until they are,
+ * the colors below alias the closest existing semantic tokens; swap them for the menu/* tokens once those are added.
+ */
+
+.ds-dropdown {
+  --ds-dropdown-menu-offset: var(--ds-spacing-2);
+  --ds-dropdown-menu-padding: var(--ds-spacing-1);
+  --ds-dropdown-menu-gap: var(--ds-spacing-1);
+  --ds-dropdown-menu-radius: var(--ds-radius-md);
+  --ds-dropdown-menu-shadow: var(--ds-shadow-md);
+  --ds-dropdown-menu-max-height: 320px;
+  --ds-dropdown-search-height: 40px;
+  --ds-dropdown-search-padding: var(--ds-spacing-4);
+  --ds-dropdown-search-icon-size: var(--ds-icon-size-medium);
+  --ds-dropdown-option-height: 44px;
+  --ds-dropdown-option-padding-x: var(--ds-spacing-4);
+  --ds-dropdown-option-padding-y: var(--ds-spacing-5);
+  --ds-dropdown-option-gap: var(--ds-spacing-4);
+  --ds-dropdown-option-radius: var(--ds-radius-sm);
+  --ds-dropdown-option-icon-size: var(--ds-icon-size-medium);
+  --ds-dropdown-footer-padding: var(--ds-spacing-4);
+  --ds-dropdown-footer-gap: var(--ds-spacing-4);
+  --ds-dropdown-empty-gap: var(--ds-spacing-4);
+  --ds-dropdown-empty-padding: var(--ds-spacing-9);
+
+  --ds-dropdown-menu-bg: var(--ds-color-background-primary);
+  --ds-dropdown-menu-border: var(--ds-color-border-default);
+  --ds-dropdown-search-bg: var(--ds-color-background-primary);
+  --ds-dropdown-search-border: var(--ds-color-border-default);
+  --ds-dropdown-search-placeholder: var(--ds-color-input-placeholder);
+  --ds-dropdown-search-icon: var(--ds-color-icon-primary);
+  --ds-dropdown-option-text: var(--ds-color-text-primary);
+  --ds-dropdown-option-text-disabled: var(--ds-color-text-disabled);
+  --ds-dropdown-option-hover: var(--ds-color-background-secondary);
+  --ds-dropdown-option-pressed: var(--ds-color-background-tertiary);
+  --ds-dropdown-option-selected: var(--ds-color-background-brand-subtle);
+  --ds-dropdown-group-text: var(--ds-color-text-secondary);
+  --ds-dropdown-empty-text: var(--ds-color-text-secondary);
+  --ds-dropdown-focus-ring: var(--ds-color-border-primary-focus);
+  --ds-dropdown-divider: var(--ds-color-divider-default);
+}
+
+/* Layout */
+.ds-dropdown {
+  position: relative;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: var(--ds-font-family);
+}
+.ds-dropdown *,
+.ds-dropdown *::before,
+.ds-dropdown *::after {
+  box-sizing: border-box;
+}
+.ds-dropdown__trigger .ds-input-field__input {
+  cursor: pointer;
+  text-overflow: ellipsis;
+}
+.ds-dropdown[data-disabled] .ds-input-field__input {
+  cursor: not-allowed;
+}
+/* Open keeps the field's focus border even while focus sits in the search field */
+.ds-dropdown[data-open] .ds-input-field__container {
+  border-color: var(--ds-input-field-border-focus);
+}
+
+/* Menu: floats over the page, 4px below the control (above it when there is no room) */
+.ds-dropdown__menu {
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  right: 0;
+  top: calc(100% + var(--ds-dropdown-menu-offset));
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-dropdown-menu-gap);
+  padding: var(--ds-dropdown-menu-padding);
+  border: 1px solid var(--ds-dropdown-menu-border);
+  border-radius: var(--ds-dropdown-menu-radius);
+  background: var(--ds-dropdown-menu-bg);
+  box-shadow: var(--ds-dropdown-menu-shadow);
+}
+.ds-dropdown[data-placement="top"] .ds-dropdown__menu {
+  top: auto;
+  bottom: calc(100% + var(--ds-dropdown-menu-offset));
+}
+
+/* Search field */
+.ds-dropdown__search {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-dropdown-search-padding);
+  height: var(--ds-dropdown-search-height);
+  padding: var(--ds-dropdown-search-padding);
+  border: 1px solid var(--ds-dropdown-search-border);
+  border-radius: var(--ds-dropdown-option-radius);
+  background: var(--ds-dropdown-search-bg);
+}
+.ds-dropdown__search:focus-within {
+  border-color: var(--ds-dropdown-focus-ring);
+}
+.ds-dropdown__search-icon {
+  flex-shrink: 0;
+  width: var(--ds-dropdown-search-icon-size);
+  height: var(--ds-dropdown-search-icon-size);
+  color: var(--ds-dropdown-search-icon);
+}
+.ds-dropdown__search-input {
+  flex: 1 1 0;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ds-dropdown-option-text);
+  font-family: inherit;
+  font-size: var(--ds-font-size-body-medium);
+  line-height: var(--ds-line-height-body-medium);
+  letter-spacing: var(--ds-letter-spacing-body-medium);
+}
+.ds-dropdown__search-input::placeholder {
+  color: var(--ds-dropdown-search-placeholder);
+  opacity: 1;
+}
+
+/* Options */
+.ds-dropdown__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-dropdown-menu-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-y: auto;
+}
+.ds-dropdown__option {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-dropdown-option-gap);
+  min-height: var(--ds-dropdown-option-height);
+  padding: var(--ds-dropdown-option-padding-y) var(--ds-dropdown-option-padding-x);
+  border-radius: var(--ds-dropdown-option-radius);
+  color: var(--ds-dropdown-option-text);
+  font-size: var(--ds-font-size-body-medium);
+  font-weight: var(--ds-font-weight-regular);
+  line-height: var(--ds-line-height-body-medium);
+  letter-spacing: var(--ds-letter-spacing-body-medium);
+  cursor: pointer;
+  user-select: none;
+}
+.ds-dropdown__option:hover {
+  background: var(--ds-dropdown-option-hover);
+}
+.ds-dropdown__option:active {
+  background: var(--ds-dropdown-option-pressed);
+}
+.ds-dropdown__option[data-selected] {
+  background: var(--ds-dropdown-option-selected);
+}
+/* Keyboard focus */
+.ds-dropdown[data-keyboard] .ds-dropdown__option[data-active] {
+  outline: 2px solid var(--ds-dropdown-focus-ring);
+  outline-offset: -2px;
+}
+.ds-dropdown__option[data-disabled] {
+  color: var(--ds-dropdown-option-text-disabled);
+  background: none;
+  cursor: not-allowed;
+}
+.ds-dropdown__option-label {
+  flex: 1 1 0;
+  min-width: 0;
+}
+.ds-dropdown__option-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: var(--ds-dropdown-option-icon-size);
+  height: var(--ds-dropdown-option-icon-size);
+}
+.ds-dropdown__option-icon > svg {
+  width: 100%;
+  height: 100%;
+}
+/* The row is the interactive element; the checkbox is only its visual */
+.ds-dropdown__checkbox {
+  pointer-events: none;
+}
+.ds-dropdown__group {
+  padding: var(--ds-dropdown-option-padding-y) var(--ds-dropdown-option-padding-x) var(--ds-dropdown-menu-gap);
+  color: var(--ds-dropdown-group-text);
+  font-size: var(--ds-font-size-body-small);
+  font-weight: var(--ds-font-weight-medium);
+  line-height: var(--ds-line-height-body-small);
+  letter-spacing: var(--ds-letter-spacing-body-small);
+}
+
+/* Empty (no results) */
+.ds-dropdown__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ds-dropdown-empty-gap);
+  padding: var(--ds-dropdown-empty-padding);
+  color: var(--ds-dropdown-empty-text);
+  font-size: var(--ds-font-size-body-medium);
+  line-height: var(--ds-line-height-body-medium);
+}
+.ds-dropdown__empty-icon {
+  width: var(--ds-icon-size-large);
+  height: var(--ds-icon-size-large);
+}
+
+/* Footer (multi select) */
+.ds-dropdown__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--ds-dropdown-footer-gap);
+  padding: var(--ds-dropdown-footer-padding);
+  border-top: 1px solid var(--ds-dropdown-divider);
+}
