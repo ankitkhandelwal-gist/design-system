@@ -410,16 +410,17 @@ export function Dropdown(props: DropdownProps) {
         <div className="ds-dropdown__menu" ref={menuRef}>
           {showSearch ? (
             <div className="ds-dropdown__search">
-              <SearchIcon className="ds-dropdown__search-icon" aria-hidden="true" />
-              <input
+              <InputField
                 ref={searchRef}
-                className="ds-dropdown__search-input"
                 type="text"
                 placeholder={searchPlaceholder}
                 aria-label={searchPlaceholder.replace(/\.+$/, "") || "Search"}
                 aria-controls={listId}
                 aria-activedescendant={active !== null ? optionId(active) : undefined}
                 autoComplete="off"
+                leadingIcon={<SearchIcon />}
+                showTrailingIcon={false}
+                showHelperText={false}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
               />

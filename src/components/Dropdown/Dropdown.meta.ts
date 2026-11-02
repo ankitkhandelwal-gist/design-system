@@ -111,9 +111,6 @@ export default defineMeta({
     color: {
       "menu.bg": "--ds-color-background-primary (Figma menu/bg pending)",
       "menu.border": "--ds-color-border-default (Figma menu/menu-border pending)",
-      "search.border": "--ds-color-border-default (Figma menu/search-border pending)",
-      "search.placeholder": "--ds-color-input-placeholder",
-      "search.icon": "--ds-color-icon-primary",
       "option.text": "--ds-color-text-primary",
       "option.text-disabled": "--ds-color-text-disabled",
       "option.hover": "--ds-color-background-secondary (Figma menu/item-hover pending)",
@@ -123,12 +120,11 @@ export default defineMeta({
       "focus.ring": "--ds-color-border-primary-focus",
       "footer.divider": "--ds-color-divider-default",
       trigger: "InputField tokens (--ds-input-field-*)",
+      search: "InputField tokens (--ds-input-field-*)",
     },
     spacing: {
       "menu.offset": "--ds-spacing-2 (4px below the trigger)",
       "menu.padding-and-gap": "--ds-spacing-1 (2px)",
-      "search.height": "40px",
-      "search.padding": "--ds-spacing-4",
       "option.height": "44px",
       "option.padding": "--ds-spacing-5 vertical, --ds-spacing-4 horizontal",
       "option.gap": "--ds-spacing-4",

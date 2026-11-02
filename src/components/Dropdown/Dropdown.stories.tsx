@@ -306,7 +306,7 @@ function NoResults() {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const type = () => {
-      const input = ref.current?.querySelector<HTMLInputElement>(".ds-dropdown__search-input");
+      const input = ref.current?.querySelector<HTMLInputElement>(".ds-dropdown__search input");
       if (!input) return;
       const set = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value")!.set!;
       set.call(input, "zzz");
@@ -418,7 +418,7 @@ const parts = [
   { n: 1, name: "Label", detail: "Optional · InputField label with mandatory marker and label icon", key: "label", side: "left" },
   { n: 2, name: "Trigger", detail: "InputField · 320 × 38 · placeholder, selected name or count · chevron flips when open", key: "trigger", side: "left" },
   { n: 3, name: "Menu", detail: "Floating overlay 4 px below the trigger · radius/md · shadow/md · scrolls after 320 px", key: "menu", side: "left" },
-  { n: 4, name: "Search field", detail: "Optional · 40 px high", key: "search", side: "right" },
+  { n: 4, name: "Search field", detail: "Optional · InputField", key: "search", side: "right" },
   { n: 5, name: "Option", detail: "44 px · Menu Item (Single, Multi with Checkbox, or Group heading)", key: "option", side: "right" },
 ] as const;
 
