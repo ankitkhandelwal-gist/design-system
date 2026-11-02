@@ -32,7 +32,7 @@ Figma: Dropdown set \`1426:626\`, Dropdown Menu \`1426:271\`, Menu Item \`1424:2
 1. **Label** (optional): InputField label with mandatory marker and label icon.
 2. **Trigger**: InputField, 320 × 38. Shows the placeholder, the selected name, or the count. The chevron flips up when open.
 3. **Menu**: floating overlay, 4 px below the trigger, same width, radius/md, shadow/md.
-4. **Search field** (optional): 40 px high.
+4. **Search field** (optional): an InputField with a search icon, 38 px high.
 5. **Option**: 44 px high Menu Item. Single, Multi (Checkbox) or Group heading.
 
 See the **Anatomy** and **Spacing** stories for the annotated, measured versions.
@@ -50,7 +50,7 @@ See the **Anatomy** and **Spacing** stories for the annotated, measured versions
 | Menu corner radius | 8 | \`--ds-radius-md\` |
 | Menu elevation | Shadow medium | \`--ds-shadow-md\` |
 | Menu max height | 320, then the option list scrolls | |
-| Search field height | 40 | |
+| Search field height | 38 (InputField) | |
 | Option height | 44 (12 vertical × 8 horizontal padding) | \`--ds-spacing-5\` · \`--ds-spacing-4\` |
 | Option corner radius | 4 | \`--ds-radius-sm\` |
 
@@ -479,7 +479,7 @@ const specRows: [string, string, string][] = [
   ["Menu corner radius", "8", "radius-md"],
   ["Menu elevation", "Shadow medium", "shadow-md"],
   ["Menu max height", "320, then the option list scrolls", ""],
-  ["Search field height", "40", ""],
+  ["Search field height", "38 (InputField)", ""],
   ["Option height", "44 (12 vertical × 8 horizontal padding)", "spacing-5 · spacing-4"],
   ["Option corner radius", "4", "radius-sm"],
 ];
