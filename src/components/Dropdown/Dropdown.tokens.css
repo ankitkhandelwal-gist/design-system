@@ -58,9 +58,10 @@
 .ds-dropdown[data-disabled] .ds-input-field__input {
   cursor: not-allowed;
 }
-/* Open keeps the field's focus border even while focus sits in the search field */
-.ds-dropdown[data-open] .ds-input-field__container {
+/* Open keeps the field's focus look (border and ring) even while focus sits in the search field */
+.ds-dropdown[data-open] .ds-dropdown__trigger .ds-input-field__container {
   border-color: var(--ds-input-field-border-focus);
+  box-shadow: 0 0 0 var(--ds-input-field-focus-ring-width) var(--ds-input-field-focus-ring);
 }
 
 /* Menu: floats over the page, 4px below the control (above it when there is no room) */
@@ -87,6 +88,11 @@
 /* Search field: an InputField with a leading search icon */
 .ds-dropdown__search {
   flex-shrink: 0;
+}
+/* The search field never shows a focus state: focus is shown on the main field only */
+.ds-dropdown__search .ds-input-field:not([data-disabled]) .ds-input-field__container:focus-within {
+  border-color: var(--ds-input-field-border);
+  box-shadow: none;
 }
 
 /* Options */

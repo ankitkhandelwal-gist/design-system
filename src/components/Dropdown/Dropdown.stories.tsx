@@ -146,11 +146,15 @@ const meta = {
     ref: { table: { disable: true } },
   },
   decorators: [
-    (Story) => (
-      <div style={{ width: 320, minHeight: 380 }}>
+    // Doc stories (layout "padded") size themselves; the rest get one 320px column
+    (Story, { parameters }) =>
+      parameters.layout === "padded" ? (
         <Story />
-      </div>
-    ),
+      ) : (
+        <div style={{ width: 320, minHeight: 380 }}>
+          <Story />
+        </div>
+      ),
   ],
 } satisfies Meta<StoryProps>;
 export default meta;
@@ -165,8 +169,9 @@ const sectionTitle: CSSProperties = {
   font: "var(--ds-font-weight-semibold) var(--ds-font-size-body-large) var(--ds-font-family)",
   color: "var(--ds-color-text-primary)",
   margin: "0 0 16px",
+  textAlign: "center",
 };
-const grid: CSSProperties = { display: "grid", gridTemplateColumns: "repeat(auto-fill, 320px)", gap: "32px 48px", alignItems: "start" };
+const grid: CSSProperties = { display: "grid", gridTemplateColumns: "repeat(auto-fit, 320px)", justifyContent: "center", gap: "32px 48px", alignItems: "start" };
 const noop = () => {};
 
 function Case({ name, children, tall }: { name: string; children: ReactNode; tall?: boolean }) {
@@ -227,7 +232,6 @@ export const MultiSelectWithFooter: Story = {
 export const DropdownStates: Story = {
   name: "States",
   parameters: { controls: { disable: true }, layout: "padded" },
-  decorators: [],
   render: () => (
     <div style={{ display: "grid", gap: 48 }}>
       {(
@@ -259,7 +263,6 @@ export const DropdownStates: Story = {
 /** Group headings, option icons and disabled options. */
 export const OptionTypes: Story = {
   parameters: { controls: { disable: true }, layout: "padded" },
-  decorators: [],
   render: () => {
     const grouped: DropdownOption[] = [
       { type: "group", label: "North" },
@@ -290,7 +293,6 @@ export const OptionTypes: Story = {
 export const SearchAndEmpty: Story = {
   name: "Search And Empty",
   parameters: { controls: { disable: true }, layout: "padded" },
-  decorators: [],
   render: () => (
     <div style={grid}>
       <Case name="Try typing" tall><Dropdown label="City" options={cities} open onOpenChange={noop} menuPlacement="bottom" /></Case>
@@ -335,7 +337,6 @@ export const LongList: Story = {
 /** The menu is an overlay: it never pushes the content below it. When there is no room below it opens above. */
 export const Floating: Story = {
   parameters: { controls: { disable: true } },
-  decorators: [],
   render: () => (
     <div style={{ width: 320 }}>
       <Dropdown label="City" options={cities} defaultOpen />
@@ -425,7 +426,6 @@ const parts = [
 /** The five parts of the dropdown. Positions are measured from the rendered component. */
 export const Anatomy: Story = {
   parameters: { controls: { disable: true }, layout: "padded" },
-  decorators: [],
   render: () => {
     const { wrap, boxes } = useBoxes({
       label: ".ds-input-field__label-row",
@@ -487,7 +487,6 @@ const specRows: [string, string, string][] = [
 /** Measurements read from the rendered component, plus the full spec table. */
 export const Spacing: Story = {
   parameters: { controls: { disable: true }, layout: "padded" },
-  decorators: [],
   render: () => {
     const { wrap, boxes } = useBoxes({
       label: ".ds-input-field__label-row",
