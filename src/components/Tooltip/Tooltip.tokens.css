@@ -1,0 +1,83 @@
+/*
+ * Tooltip: component-scoped tokens (aliases of global tokens in src/tokens) and styles.
+ * Spec source: Figma "Tooltip" component set, node 894:39 (8 Peak variants, 8/12 padding, radius md, 9x5 arrow).
+ */
+
+.ds-tooltip {
+  --ds-tooltip-bg: var(--ds-color-tooltip-bg);
+  --ds-tooltip-text: var(--ds-color-tooltip-text);
+  --ds-tooltip-padding-y: var(--ds-spacing-4);
+  --ds-tooltip-padding-x: var(--ds-spacing-5);
+  --ds-tooltip-radius: var(--ds-radius-md);
+  --ds-tooltip-shadow: var(--ds-shadow-md);
+  --ds-tooltip-offset: var(--ds-spacing-2);
+  --ds-tooltip-max-width: 320px;
+  --ds-tooltip-arrow-width: 9px;
+  --ds-tooltip-arrow-height: 5px;
+  --ds-tooltip-arrow-inset: var(--ds-spacing-5);
+}
+
+.ds-tooltip {
+  position: relative;
+  display: inline-flex;
+}
+.ds-tooltip__body {
+  /* Placed against the viewport by Tooltip.tsx (flips and shifts to fit), so no parent can clip it. */
+  position: fixed;
+  z-index: 1000;
+  box-sizing: border-box;
+  width: max-content;
+  max-width: var(--ds-tooltip-max-width);
+  padding: var(--ds-tooltip-padding-y) var(--ds-tooltip-padding-x);
+  border-radius: var(--ds-tooltip-radius);
+  background: var(--ds-tooltip-bg);
+  color: var(--ds-tooltip-text);
+  box-shadow: var(--ds-tooltip-shadow);
+  font-family: var(--ds-font-family);
+  pointer-events: none;
+}
+
+/* Arrow: a 9x5 triangle that overlaps the body by 1px so there is no seam. */
+.ds-tooltip__arrow {
+  position: absolute;
+  width: var(--ds-tooltip-arrow-width);
+  height: var(--ds-tooltip-arrow-height);
+  background: var(--ds-tooltip-bg);
+}
+
+/* The body's position comes from JS; these rules only place the arrow for each resolved placement.
+   Tooltip above the trigger: arrow on the bottom edge, pointing down. */
+.ds-tooltip__body[data-placement^="top"] > .ds-tooltip__arrow {
+  bottom: calc(var(--ds-tooltip-arrow-height) * -1 + 1px);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+/* Tooltip below the trigger: arrow on the top edge, pointing up. */
+.ds-tooltip__body[data-placement^="bottom"] > .ds-tooltip__arrow {
+  top: calc(var(--ds-tooltip-arrow-height) * -1 + 1px);
+  clip-path: polygon(0 100%, 50% 0, 100% 100%);
+}
+/* Horizontal alignment for top and bottom: centered, or flush with the trigger's start or end. */
+.ds-tooltip__body[data-placement="top"] > .ds-tooltip__arrow,
+.ds-tooltip__body[data-placement="bottom"] > .ds-tooltip__arrow {
+  left: 50%;
+  transform: translateX(-50%);
+}
+.ds-tooltip__body[data-placement$="-start"] > .ds-tooltip__arrow { left: var(--ds-tooltip-arrow-inset); }
+.ds-tooltip__body[data-placement$="-end"] > .ds-tooltip__arrow { right: var(--ds-tooltip-arrow-inset); }
+
+/* Tooltip beside the trigger, vertically centered. The arrow is rotated: 5 wide, 9 tall. */
+.ds-tooltip__body[data-placement="left"] > .ds-tooltip__arrow,
+.ds-tooltip__body[data-placement="right"] > .ds-tooltip__arrow {
+  top: 50%;
+  width: var(--ds-tooltip-arrow-height);
+  height: var(--ds-tooltip-arrow-width);
+  transform: translateY(-50%);
+}
+.ds-tooltip__body[data-placement="left"] > .ds-tooltip__arrow {
+  right: calc(var(--ds-tooltip-arrow-height) * -1 + 1px);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+.ds-tooltip__body[data-placement="right"] > .ds-tooltip__arrow {
+  left: calc(var(--ds-tooltip-arrow-height) * -1 + 1px);
+  clip-path: polygon(100% 0, 0 50%, 100% 100%);
+}
