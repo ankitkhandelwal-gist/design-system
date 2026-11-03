@@ -1,0 +1,136 @@
+/*
+ * Pagination: component-scoped tokens (aliases of global tokens in src/tokens) and styles.
+ * Spec source: Figma "Pagination" component set, node 844:5529 (48px bar, 32px page buttons, 30px size menu).
+ */
+
+.ds-pagination {
+  --ds-pagination-bg: var(--ds-color-pagination-bg);
+  --ds-pagination-border: var(--ds-color-pagination-border);
+  --ds-pagination-height: 48px;
+  --ds-pagination-padding-x: var(--ds-spacing-6);
+  --ds-pagination-info-gap: var(--ds-spacing-2);
+  --ds-pagination-pages-gap: var(--ds-spacing-2);
+  --ds-pagination-text-primary: var(--ds-color-pagination-text-primary);
+  --ds-pagination-text-secondary: var(--ds-color-pagination-text-secondary);
+  --ds-pagination-page-size: 32px;
+  --ds-pagination-page-radius: var(--ds-radius-sm);
+  --ds-pagination-page-hover-bg: var(--ds-color-pagination-hover-bg);
+  --ds-pagination-active-bg: var(--ds-color-pagination-active-bg);
+  --ds-pagination-active-text: var(--ds-color-pagination-active-text);
+  --ds-pagination-icon: var(--ds-color-pagination-primary-icon);
+  --ds-pagination-icon-disabled: var(--ds-color-pagination-disabled-icon);
+  --ds-pagination-icon-size: var(--ds-icon-size-small);
+  --ds-pagination-select-bg: var(--ds-color-pagination-dropdown-bg);
+  --ds-pagination-select-border: var(--ds-color-pagination-dropdown-border);
+  --ds-pagination-select-radius: var(--ds-radius-sm);
+  --ds-pagination-focus-ring: var(--ds-color-border-primary-focus);
+}
+
+.ds-pagination {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ds-spacing-5);
+  flex-wrap: wrap;
+  min-height: var(--ds-pagination-height);
+  padding: 0 var(--ds-pagination-padding-x);
+  background: var(--ds-pagination-bg);
+  border-top: 1px solid var(--ds-pagination-border);
+  font-family: var(--ds-font-family);
+}
+/* Inside a Table footer the divider above is the Table's own last row line, so don't double it. */
+.ds-table__footer > .ds-pagination {
+  border-top: 0;
+}
+
+.ds-pagination__info {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-pagination-info-gap);
+}
+.ds-pagination__muted { color: var(--ds-pagination-text-secondary); }
+.ds-pagination__strong { color: var(--ds-pagination-text-primary); }
+
+/* Native <select> for the size menu: accessible and light. The arrow is drawn over it. */
+.ds-pagination__select {
+  position: relative;
+  display: inline-flex;
+}
+.ds-pagination__select-input {
+  box-sizing: border-box;
+  appearance: none;
+  height: 30px;
+  margin: 0;
+  padding: var(--ds-spacing-2) calc(var(--ds-spacing-3) + var(--ds-icon-size-medium) + var(--ds-spacing-2)) var(--ds-spacing-2) var(--ds-spacing-4);
+  border: 1px solid var(--ds-pagination-select-border);
+  border-radius: var(--ds-pagination-select-radius);
+  background: var(--ds-pagination-select-bg);
+  color: var(--ds-pagination-text-primary);
+  cursor: pointer;
+}
+.ds-pagination__select-input:focus-visible,
+.ds-pagination__page:focus-visible,
+.ds-pagination__nav:focus-visible {
+  outline: 2px solid var(--ds-pagination-focus-ring);
+  outline-offset: 1px;
+}
+.ds-pagination__select-icon {
+  position: absolute;
+  top: 50%;
+  right: var(--ds-spacing-3);
+  display: inline-flex;
+  font-size: var(--ds-icon-size-medium);
+  color: var(--ds-pagination-icon);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.ds-pagination__pages {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-pagination-pages-gap);
+}
+.ds-pagination__page,
+.ds-pagination__ellipsis {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--ds-pagination-page-size);
+  height: var(--ds-pagination-page-size);
+  padding: 0;
+  border: 0;
+  border-radius: var(--ds-pagination-page-radius);
+  background: transparent;
+  color: var(--ds-pagination-text-primary);
+}
+.ds-pagination__page { cursor: pointer; }
+.ds-pagination__page:hover,
+.ds-pagination__page[data-state="hover"] {
+  background: var(--ds-pagination-page-hover-bg);
+}
+.ds-pagination__page[aria-current="page"] {
+  background: var(--ds-pagination-active-bg);
+  color: var(--ds-pagination-active-text);
+  cursor: default;
+}
+.ds-pagination__nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--ds-pagination-page-size);
+  height: var(--ds-pagination-page-size);
+  padding: 0;
+  border: 0;
+  border-radius: var(--ds-pagination-page-radius);
+  background: transparent;
+  font-size: var(--ds-pagination-icon-size);
+  color: var(--ds-pagination-icon);
+  cursor: pointer;
+}
+.ds-pagination__nav:hover:not(:disabled) { background: var(--ds-pagination-page-hover-bg); }
+.ds-pagination__nav:disabled {
+  color: var(--ds-pagination-icon-disabled);
+  cursor: not-allowed;
+}

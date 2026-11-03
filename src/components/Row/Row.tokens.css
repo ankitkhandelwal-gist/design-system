@@ -1,0 +1,49 @@
+/*
+ * Row: component-scoped tokens (aliases of global tokens in src/tokens) and styles.
+ * Spec source: Figma "Row" component set, node 1390:4250 (Type header/body x State default/hover/selected/focused/disabled).
+ * The Row draws its own states over its cells, so a whole row changes together.
+ * `data-state="hover"` forces the hover look for stories; real use relies on :hover.
+ */
+
+.ds-row {
+  --ds-row-bg-hover: var(--ds-color-table-row-hover);
+  --ds-row-bg-selected: var(--ds-color-table-row-selected);
+  --ds-row-bg: var(--ds-color-table-row-bg);
+  --ds-row-focus-ring: var(--ds-color-border-primary-focus);
+  --ds-row-focus-ring-width: 2px;
+  /* Figma fades the whole disabled row to 60% (no token for it). */
+  --ds-row-disabled-opacity: 0.6;
+}
+
+/* Hover (body rows only) */
+.ds-row[data-section="body"]:hover > .ds-cell,
+.ds-row[data-section="body"][data-state="hover"] > .ds-cell {
+  background: var(--ds-row-bg-hover);
+}
+/* Selected wins over hover */
+.ds-row[data-section="body"][aria-selected="true"] > .ds-cell {
+  background: var(--ds-row-bg-selected);
+}
+
+/* Clickable rows */
+.ds-row[data-interactive] {
+  cursor: pointer;
+}
+.ds-row:focus-visible,
+.ds-row[data-state="focused"] {
+  outline: var(--ds-row-focus-ring-width) solid var(--ds-row-focus-ring);
+  outline-offset: calc(-1 * var(--ds-row-focus-ring-width));
+}
+
+/* Disabled: content fades, background stays, no hover tint */
+.ds-row[aria-disabled="true"] > .ds-cell > .ds-cell__content {
+  opacity: var(--ds-row-disabled-opacity);
+}
+.ds-row[aria-disabled="true"],
+.ds-row[aria-disabled="true"] > .ds-cell {
+  cursor: not-allowed;
+}
+.ds-row[aria-disabled="true"][data-section="body"]:hover > .ds-cell,
+.ds-row[aria-disabled="true"][data-section="body"][data-state="hover"] > .ds-cell {
+  background: var(--ds-row-bg);
+}

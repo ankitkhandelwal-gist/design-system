@@ -113,7 +113,7 @@
   --ds-color-table-header-text: var(--ds-color-text-primary);
   --ds-color-table-row-bg: var(--ds-color-white);
   --ds-color-table-row-alt-bg: var(--ds-color-grey-50);
-  --ds-color-table-row-hover: var(--ds-color-blue-grey-300);
+  --ds-color-table-row-hover: var(--ds-color-grey-50);
   --ds-color-table-border-default: var(--ds-color-grey-200);
   --ds-color-button-secondary-grey-bg: var(--ds-color-grey-200);
   --ds-color-button-secondary-grey-text: var(--ds-color-grey-900);

@@ -1,0 +1,35 @@
+/*
+ * Table: component-scoped tokens (aliases of global tokens in src/tokens) and styles.
+ * Spec source: Figma "Table" component, node 1342:2333 (outer border, radius md, clipping, Header / Rows / Footer slots).
+ */
+
+.ds-table {
+  --ds-table-radius: var(--ds-radius-md);
+  --ds-table-border-width: 1px;
+  --ds-table-border: var(--ds-color-table-border-default);
+  --ds-table-bg: var(--ds-color-table-row-bg);
+}
+
+.ds-table {
+  box-sizing: border-box;
+  width: 100%;
+  overflow: hidden;
+  border: var(--ds-table-border-width) solid var(--ds-table-border);
+  border-radius: var(--ds-table-radius);
+  background: var(--ds-table-bg);
+  font-family: var(--ds-font-family);
+}
+.ds-table__table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+/* The last row's bottom line is hidden (it would double the outline), unless a footer sits below it.
+   Figma needs the "Hide Bottom Border" switch for this; CSS does it automatically. */
+.ds-table:not([data-footer]) tbody > .ds-row:last-child > .ds-cell {
+  border-bottom-color: transparent;
+}
+.ds-table__empty,
+.ds-table__footer {
+  box-sizing: border-box;
+}

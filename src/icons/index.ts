@@ -60,3 +60,9 @@ export { default as IndeterminateCheckBoxFilledIcon } from "@material-symbols/sv
 
 // Used by Dropdown
 export { default as SearchOffIcon } from "@material-symbols/svg-400/rounded/search_off.svg?react";
+
+// Used by Cell (sortable column header)
+export { default as UnfoldMoreIcon } from "@material-symbols/svg-400/rounded/unfold_more.svg?react";
+export { default as ArrowDropDownIcon } from "@material-symbols/svg-400/rounded/arrow_drop_down.svg?react";
+export { default as ArrowBackIosIcon } from "@material-symbols/svg-400/rounded/arrow_back_ios.svg?react";
+export { default as ArrowForwardIosIcon } from "@material-symbols/svg-400/rounded/arrow_forward_ios.svg?react";

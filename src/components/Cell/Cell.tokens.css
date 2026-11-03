@@ -1,0 +1,135 @@
+/*
+ * Cell: component-scoped tokens (aliases of global tokens in src/tokens) and styles.
+ * Spec source: Figma "Cells" component set, node 646:407 (Type header/content, Value text/slot, Align, Size, Sort, State).
+ * Hover and Selected backgrounds are applied by Row (so a whole row changes together). Header cells use <th>, body cells <td>.
+ * Height: header and content cells share one height per size: line height 20 + 2 x padding + 1px border = 37 / 45 / 53.
+ */
+
+.ds-cell {
+  --ds-cell-padding-x: var(--ds-spacing-5);
+  --ds-cell-padding-y: var(--ds-spacing-5);
+  --ds-cell-gap: var(--ds-spacing-2);
+  --ds-cell-icon-size: var(--ds-icon-size-small);
+  --ds-cell-border-width: 1px;
+  --ds-cell-focus-ring-width: 2px;
+
+  --ds-cell-bg: var(--ds-color-table-row-bg);
+  --ds-cell-text: var(--ds-color-table-content-text);
+  --ds-cell-border: var(--ds-color-table-border-default);
+  --ds-cell-icon: var(--ds-color-icon-secondary);
+  --ds-cell-icon-sorted: var(--ds-color-icon-primary);
+  --ds-cell-header-bg-hover: var(--ds-color-table-header-hover);
+  --ds-cell-focus-ring: var(--ds-color-border-primary-focus);
+}
+.ds-cell[data-size="compact"] {
+  --ds-cell-padding-y: var(--ds-spacing-4);
+}
+.ds-cell[data-size="comfortable"] {
+  --ds-cell-padding-y: var(--ds-spacing-6);
+}
+.ds-cell[data-section="header"] {
+  --ds-cell-bg: var(--ds-color-table-header-bg);
+  --ds-cell-text: var(--ds-color-table-header-text);
+}
+
+/* Base */
+.ds-cell {
+  box-sizing: border-box;
+  height: calc(var(--ds-line-height-body-medium) + 2 * var(--ds-cell-padding-y) + var(--ds-cell-border-width));
+  padding: var(--ds-cell-padding-y) var(--ds-cell-padding-x);
+  border: 0;
+  border-bottom: var(--ds-cell-border-width) solid var(--ds-cell-border);
+  background: var(--ds-cell-bg);
+  color: var(--ds-cell-text);
+  font-family: var(--ds-font-family);
+  font-size: var(--ds-font-size-body-medium);
+  font-weight: var(--ds-font-weight-regular);
+  line-height: var(--ds-line-height-body-medium);
+  letter-spacing: var(--ds-letter-spacing-body-medium);
+  text-align: left;
+  vertical-align: middle;
+}
+.ds-cell[data-section="header"] {
+  font-size: var(--ds-font-size-body-small);
+  font-weight: var(--ds-font-weight-bold);
+  line-height: var(--ds-line-height-body-small);
+  letter-spacing: var(--ds-letter-spacing-body-small);
+}
+.ds-cell[data-align="center"] {
+  text-align: center;
+}
+.ds-cell[data-align="right"] {
+  text-align: right;
+}
+
+/* Content: label + icons in one row, aligned as the cell is */
+.ds-cell__content {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-cell-gap);
+  min-width: 0;
+}
+.ds-cell[data-align="center"] .ds-cell__content {
+  justify-content: center;
+}
+.ds-cell[data-align="right"] .ds-cell__content {
+  justify-content: flex-end;
+}
+/* Plain text wraps to two lines, then truncates with an ellipsis */
+.ds-cell__text {
+  display: -webkit-box;
+  min-width: 0;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow-wrap: anywhere;
+}
+.ds-cell__slot {
+  display: contents;
+}
+.ds-cell__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: var(--ds-cell-icon-size);
+  height: var(--ds-cell-icon-size);
+  color: var(--ds-cell-icon);
+}
+.ds-cell__icon > svg {
+  width: 100%;
+  height: 100%;
+}
+.ds-cell__icon--sort[data-sort="ascending"],
+.ds-cell__icon--sort[data-sort="descending"] {
+  color: var(--ds-cell-icon-sorted);
+}
+
+/* Sortable header: the label is a button */
+.ds-cell__sort {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-cell-gap);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-align: inherit;
+  cursor: pointer;
+}
+.ds-cell[data-align="right"] .ds-cell__sort {
+  margin-left: auto;
+}
+.ds-cell[data-align="center"] .ds-cell__sort {
+  margin: 0 auto;
+}
+.ds-cell[data-sortable]:hover {
+  background: var(--ds-cell-header-bg-hover);
+}
+.ds-cell__sort:focus-visible {
+  outline: var(--ds-cell-focus-ring-width) solid var(--ds-cell-focus-ring);
+  outline-offset: calc(-1 * var(--ds-cell-focus-ring-width));
+}
