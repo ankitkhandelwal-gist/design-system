@@ -248,3 +248,6 @@ tags and scale/scale/red/very-high/bg => Red/400
 tags and scale/scale/red/very-high/text => Red/900
 table/row-selected => Brand Navy Blue/50
 table/header-hover => Blue Grey/100
+snackbar/action-button-bg => Grey/800
+snackbar/icon => B&W/Pure White
+snackbar/text => B&W/Pure White

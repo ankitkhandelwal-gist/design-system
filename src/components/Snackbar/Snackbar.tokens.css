@@ -1,0 +1,130 @@
+/*
+ * Snackbar: component-scoped tokens (aliases of global tokens in src/tokens) and styles.
+ * Spec source: Figma "Snackbar-dark" component set, node 1468:16185 (420px, dark, 6px colored bar, 4 types).
+ */
+
+.ds-snackbar {
+  --ds-snackbar-bg: var(--ds-color-snackbar-bg);
+  --ds-snackbar-text: var(--ds-color-snackbar-text);
+  --ds-snackbar-icon: var(--ds-color-snackbar-icon);
+  --ds-snackbar-icon-size: var(--ds-icon-size-medium);
+  --ds-snackbar-padding: var(--ds-spacing-6);
+  --ds-snackbar-gap: var(--ds-spacing-5);
+  --ds-snackbar-content-gap: var(--ds-spacing-2);
+  --ds-snackbar-actions-gap: var(--ds-spacing-4);
+  --ds-snackbar-radius: var(--ds-radius-md);
+  --ds-snackbar-width: 420px;
+  --ds-snackbar-bar-width: 6px;
+  --ds-snackbar-bar: var(--ds-color-snackbar-info-bg);
+  /* Figma drop shadow 0 4 12, 10% black; no shadow token matches it. */
+  --ds-snackbar-shadow: 0 4px 12px 0 #0000001a;
+  --ds-snackbar-button-padding-y: var(--ds-spacing-3);
+  --ds-snackbar-button-padding-x: var(--ds-spacing-5);
+  --ds-snackbar-action-bg: var(--ds-color-snackbar-action-button-bg);
+  --ds-snackbar-focus-ring: var(--ds-color-border-primary-focus);
+  /* Motion (not in Figma). Set --ds-snackbar-enter-x / -y on a parent to change where it slides in from. */
+  --ds-snackbar-enter-duration: 280ms;
+  --ds-snackbar-exit-duration: 180ms;
+  --ds-snackbar-enter-easing: cubic-bezier(0.16, 1, 0.3, 1);
+  --ds-snackbar-exit-easing: cubic-bezier(0.4, 0, 1, 1);
+}
+.ds-snackbar[data-type="success"] { --ds-snackbar-bar: var(--ds-color-snackbar-success-bg); }
+.ds-snackbar[data-type="danger"] { --ds-snackbar-bar: var(--ds-color-snackbar-error-bg); }
+.ds-snackbar[data-type="warning"] { --ds-snackbar-bar: var(--ds-color-snackbar-warning-bg); }
+
+.ds-snackbar {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ds-snackbar-gap);
+  width: var(--ds-snackbar-width);
+  max-width: 100%;
+  padding: var(--ds-snackbar-padding);
+  overflow: hidden;
+  border-radius: var(--ds-snackbar-radius);
+  background: var(--ds-snackbar-bg);
+  color: var(--ds-snackbar-text);
+  box-shadow: var(--ds-snackbar-shadow);
+  font-family: var(--ds-font-family);
+}
+/* The type bar sits over the left edge and does not move the content. */
+.ds-snackbar::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--ds-snackbar-bar-width);
+  background: var(--ds-snackbar-bar);
+}
+.ds-snackbar__icon {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--ds-snackbar-icon-size);
+  height: var(--ds-snackbar-icon-size);
+  font-size: var(--ds-snackbar-icon-size);
+  color: var(--ds-snackbar-icon);
+}
+.ds-snackbar__content {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-snackbar-content-gap);
+}
+.ds-snackbar__heading,
+.ds-snackbar__description {
+  margin: 0;
+  color: var(--ds-snackbar-text);
+}
+.ds-snackbar__actions {
+  flex: none;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ds-snackbar-actions-gap);
+}
+.ds-snackbar__button {
+  box-sizing: border-box;
+  margin: 0;
+  padding: var(--ds-snackbar-button-padding-y) var(--ds-snackbar-button-padding-x);
+  border: 0;
+  border-radius: var(--ds-snackbar-radius);
+  background: transparent;
+  color: var(--ds-snackbar-text);
+  font-family: inherit;
+  cursor: pointer;
+}
+.ds-snackbar__button[data-kind="action"] { background: var(--ds-snackbar-action-bg); }
+/* Hover is not in Figma: dismiss takes the action color, action lightens a little. */
+.ds-snackbar__button[data-kind="dismiss"]:hover { background: var(--ds-snackbar-action-bg); }
+.ds-snackbar__button[data-kind="action"]:hover {
+  background: color-mix(in srgb, var(--ds-snackbar-action-bg), var(--ds-snackbar-text) 12%);
+}
+.ds-snackbar__button:focus-visible {
+  outline: 2px solid var(--ds-snackbar-focus-ring);
+  outline-offset: 1px;
+}
+
+/* Appears with a short slide and fade. Add data-exiting to play the reverse before you remove it. */
+.ds-snackbar {
+  animation: ds-snackbar-in var(--ds-snackbar-enter-duration) var(--ds-snackbar-enter-easing) both;
+}
+.ds-snackbar[data-exiting] {
+  animation: ds-snackbar-out var(--ds-snackbar-exit-duration) var(--ds-snackbar-exit-easing) forwards;
+  pointer-events: none;
+}
+@keyframes ds-snackbar-in {
+  from { opacity: 0; transform: translate(var(--ds-snackbar-enter-x, 0px), var(--ds-snackbar-enter-y, 12px)); }
+  to { opacity: 1; transform: translate(0, 0); }
+}
+@keyframes ds-snackbar-out {
+  from { opacity: 1; transform: translate(0, 0); }
+  to { opacity: 0; transform: translate(var(--ds-snackbar-enter-x, 0px), var(--ds-snackbar-enter-y, 12px)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ds-snackbar,
+  .ds-snackbar[data-exiting] {
+    animation-duration: 1ms;
+  }
+}
